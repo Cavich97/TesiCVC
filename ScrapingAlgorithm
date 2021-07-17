@@ -1,4 +1,9 @@
-from selenium import
+from selenium import webdriver
+
+path = "C:/Program Files (x86)/chromedriver.exe"
+driver = webdriver.Chrome(path)
+
+driver.get("http://www.primo.polimi.it/primo_library/libweb/action/search.do?vid=base&reset_config=true&openFdb=true&searchType=Find&prefLang=it_IT&irdType=rt-db")
 
 
 
