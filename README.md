@@ -1,5 +1,4 @@
 # TesiCVC
 
-To-do list:
-- Youtube tutorial su selenium
-- lista iterazioni da seguire
+Selenium Documentation: https://selenium-python.readthedocs.io/
+
