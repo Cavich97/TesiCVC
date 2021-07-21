@@ -1,7 +1,6 @@
 from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
 
-from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
@@ -11,24 +10,30 @@ import time
 path = "C:/Program Files (x86)/chromedriver.exe"
 driver = webdriver.Chrome(path)
 
-driver.get("http://www.primo.polimi.it/primo_library/libweb/action/search.do?vid=base&reset_config=true&openFdb=true&searchType=Find&prefLang=it_IT&irdType=rt-db")
-
-search = driver.find_element_by_id("searchTerms")
-# enter next whatever query you want to search for #
-search.send_keys("Verizon")
-search.send_keys(Keys.RETURN)
-
+driver.get("http://www.nexisuni.com/")
 
 
 try:
-    main = WebDriverWait(driver, 10).until(
-        EC.presence_of_element_located((By.ID, "ybvnk"))
+    search = WebDriverWait(driver, 20).until(
+        EC.presence_of_element_located((By.ID, "searchTerms"))
     )
-except:
-    driver.quit()
-    
-    
-time.sleep(5)
+# enter next whatever query you want to search for #
+    search.send_keys("Verizon")
+    search.send_keys(Keys.RETURN)
 
-driver.quit()
+    try:     
+        main = WebDriverWait(driver, 30).until(
+            EC.presence_of_element_located((By.ID, "ybvnk"))
+        )
+        
+        articles = main.find_elements_by_tag_name("data-id")
+        for article in articles:
+            header = article.find_element_by_class_name("doc-title translate")
+            print(header.text)
+    
+    finally:
+        time.sleep(5)
 
+finally:
+    time.sleep(5)
+    
