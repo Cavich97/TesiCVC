@@ -5,6 +5,8 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 
+from selenium.webdriver.common.action_chains import ActionChains
+
 import time
 
 path = "C:/Program Files (x86)/chromedriver.exe"
@@ -20,20 +22,22 @@ try:
 # enter next whatever query you want to search for #
     search.send_keys("Verizon")
     search.send_keys(Keys.RETURN)
+    
 
+finally:
+    
     try:     
         main = WebDriverWait(driver, 30).until(
             EC.presence_of_element_located((By.ID, "ybvnk"))
-        )
-        
-        articles = main.find_elements_by_tag_name("data-id")
+        )        
+        articles = main.find_elements_by_tag_name("li")                
         for article in articles:
-            header = article.find_element_by_class_name("doc-title translate")
+            ActionChains(driver).move_to_element(article).perform()
+            header = article.find_element_by_xpath("//h2[@class='doc-title translate']")
             print(header.text)
+            date = article.find_element_by_xpath("//dd[4]")
+            print(date.text)
     
     finally:
         time.sleep(5)
 
-finally:
-    time.sleep(5)
-    
