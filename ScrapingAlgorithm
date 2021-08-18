@@ -12,45 +12,54 @@ driver = webdriver.Chrome(path)
 
 driver.get("http://www.nexisuni.com/")
 
-# SEARCH QUERY #
-try:
-    search = WebDriverWait(driver, 20).until(
-        EC.presence_of_element_located((By.ID, "searchTerms"))
-    )
-    CVC = "headline(Verizon)"
-    Startup = "headline(Microsoft)"
-    search.send_keys(CVC + " and " + Startup + " and " + " headline(teams up)")
-    search.send_keys(Keys.RETURN)
-    
-finally:
+CVC = "headline(Verizon)"
+startups = ["headline(Microsoft)", "headline(Payphone)"]
 
-# SAVE ARTICLES' DATA #
+## ITERATE STARTUPS ##
+for startup in startups:
+    
+## SEARCH QUERY ##
     try:
-        main = WebDriverWait(driver, 30).until(
-            EC.presence_of_element_located((By.ID, "ybvnk"))
-        )        
+        search = WebDriverWait(driver, 20).until(
+            EC.presence_of_element_located((By.ID, "searchTerms"))
+        )
+        search.clear()
+        search.send_keys(CVC + " and " + startup + " and " + " headline(teams up) or headline(agreement)")
+        search.send_keys(Keys.RETURN)
         
+    finally:
+    
+## SAVE ARTICLES' DATA ##
+        try:
+            main = WebDriverWait(driver, 30).until(
+                EC.presence_of_element_located((By.ID, "ybvnk"))
+            )        
+            
 # dropdownmenu = main.find_element_by_class_name("dropdown")
 # order = dropdownmenu.find_element_by_xpath("//button[5]").click()
-        
-        articles = main.find_elements_by_xpath("//*[starts-with(@class,'row_sr')]")
-        headers = main.find_elements_by_xpath("//h2[@class='doc-title translate']")
-        dates = main.find_elements_by_xpath("//dd[4]")
-        
-        result_headers = [None]*len(headers)
-        result_dates = [None]*len(dates)
-        i = 0
-        j = 0
-        for header in headers:
-            result_headers[i] = header.text
-            i += 1
-        for date in dates:
-            result_dates[j] = date.text
-            j += 1
-        
-        print(result_headers)
-        print(result_dates)
+            
+            articles = main.find_elements_by_xpath("//*[starts-with(@class,'row_sr')]")
+            headers = main.find_elements_by_xpath("//h2[@class='doc-title translate']")
+            dates = main.find_elements_by_xpath("//dd[4]")
+            
+            result_headers = [None]*len(headers)
+            result_dates = [None]*len(dates)
+            i = 0
+            j = 0
+            for header in headers:
+                result_headers[i] = header.text
+                i += 1
+            for date in dates:
+                result_dates[j] = date.text
+                j += 1
 
+# discard close dates
 
-    finally:
-        time.sleep(5)
+# avoid overwriting variables
+            
+            print(result_headers)
+            print(result_dates)
+    
+    
+        finally:
+            time.sleep(5)
