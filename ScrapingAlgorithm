@@ -5,8 +5,6 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 
-from selenium.webdriver.common.action_chains import ActionChains
-
 import time
 
 path = "C:/Program Files (x86)/chromedriver.exe"
@@ -14,7 +12,7 @@ driver = webdriver.Chrome(path)
 
 driver.get("http://www.nexisuni.com/")
 
-
+# SEARCH QUERY #
 try:
     search = WebDriverWait(driver, 20).until(
         EC.presence_of_element_located((By.ID, "searchTerms"))
@@ -23,21 +21,32 @@ try:
     search.send_keys("Verizon")
     search.send_keys(Keys.RETURN)
     
-
 finally:
-    
-    try:     
+
+# SAVE ARTICLES' DATA #
+    try:
         main = WebDriverWait(driver, 30).until(
             EC.presence_of_element_located((By.ID, "ybvnk"))
         )        
-        articles = main.find_elements_by_tag_name("li")                
-        for article in articles:
-            ActionChains(driver).move_to_element(article).perform()
-            header = article.find_element_by_xpath("//h2[@class='doc-title translate']")
-            print(header.text)
-            date = article.find_element_by_xpath("//dd[4]")
-            print(date.text)
-    
+        articles = main.find_elements_by_xpath("//*[starts-with(@class,'row_sr')]")
+        headers = main.find_elements_by_xpath("//h2[@class='doc-title translate']")
+        dates = main.find_elements_by_xpath("//dd[4]")
+        
+        result_headers = [None]*len(headers)
+        result_dates = [None]*len(dates)
+        i = 0
+        j = 0
+        for header in headers:
+            result_headers[i] = header.text
+            i += 1
+        for date in dates:
+            result_dates[j] = date.text
+            j += 1
+        
+        print(result_headers)
+        print(result_dates)
+
+
     finally:
         time.sleep(5)
 
