@@ -17,8 +17,9 @@ try:
     search = WebDriverWait(driver, 20).until(
         EC.presence_of_element_located((By.ID, "searchTerms"))
     )
-# enter next whatever query you want to search for #
-    search.send_keys("Verizon")
+    CVC = "headline(Verizon)"
+    Startup = "headline(Microsoft)"
+    search.send_keys(CVC + " and " + Startup + " and " + " headline(teams up)")
     search.send_keys(Keys.RETURN)
     
 finally:
@@ -28,6 +29,10 @@ finally:
         main = WebDriverWait(driver, 30).until(
             EC.presence_of_element_located((By.ID, "ybvnk"))
         )        
+        
+# dropdownmenu = main.find_element_by_class_name("dropdown")
+# order = dropdownmenu.find_element_by_xpath("//button[5]").click()
+        
         articles = main.find_elements_by_xpath("//*[starts-with(@class,'row_sr')]")
         headers = main.find_elements_by_xpath("//h2[@class='doc-title translate']")
         dates = main.find_elements_by_xpath("//dd[4]")
@@ -49,4 +54,3 @@ finally:
 
     finally:
         time.sleep(5)
-
