@@ -7,13 +7,19 @@ from selenium.webdriver.support import expected_conditions as EC
 
 import time
 
+import pandas as pd
+
 path = "C:/Program Files (x86)/chromedriver.exe"
 driver = webdriver.Chrome(path)
 
 driver.get("http://www.nexisuni.com/")
 
+## INSERT CVC AND ITS STARTUPS ##
 CVC = "headline(Verizon)"
-startups = ["headline(Microsoft)", "headline(Payphone)"]
+startups = ["headline(Spotify)", "headline(Payphone)"]
+
+## SETTLE DATAFRAME ##
+df = pd.DataFrame(columns=['Startup', 'Header', 'Date'])
 
 ## ITERATE STARTUPS ##
 for startup in startups:
@@ -27,9 +33,10 @@ for startup in startups:
         search.send_keys(CVC + " and " + startup + " and " + " headline(teams up) or headline(agreement)")
         search.send_keys(Keys.RETURN)
         
-    finally:
     
 ## SAVE ARTICLES' DATA ##
+    finally:
+        
         try:
             main = WebDriverWait(driver, 30).until(
                 EC.presence_of_element_located((By.ID, "ybvnk"))
@@ -42,24 +49,25 @@ for startup in startups:
             headers = main.find_elements_by_xpath("//h2[@class='doc-title translate']")
             dates = main.find_elements_by_xpath("//dd[4]")
             
-            result_headers = [None]*len(headers)
-            result_dates = [None]*len(dates)
+            i = 0            
+            for i in range(len(articles)):                
+                df.loc[i, 'Startup'] = startup
             i = 0
-            j = 0
-            for header in headers:
-                result_headers[i] = header.text
+            for header in headers: 
+                df.loc[i, 'Header'] = header.text
                 i += 1
-            for date in dates:
-                result_dates[j] = date.text
-                j += 1
-
+            i = 0
+            for date in dates:    
+                df.loc[i, 'Date'] = date.text
+                i += 1
+                            
+                
 # discard close dates
 
-# avoid overwriting variables
-            
-            print(result_headers)
-            print(result_dates)
-    
+# solo alleanze tech, aggiungere termini
+
     
         finally:
             time.sleep(5)
+
+print(df)
