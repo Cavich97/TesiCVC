@@ -6,35 +6,44 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 
 import time
-
 import pandas as pd
 
 path = "C:/Program Files (x86)/chromedriver.exe"
 driver = webdriver.Chrome(path)
-
 driver.get("http://www.nexisuni.com/")
 
-## INSERT CVC AND ITS STARTUPS ##
-CVC = "headline(Verizon)"
-startups = ["headline(Spotify)", "headline(Payphone)"]
+df = pd.read_excel("C:/Users/andre/OneDrive/Desktop/CVC_test.xlsx")
 
-## SETTLE DATAFRAME ##
-df = pd.DataFrame(columns=['Startup', 'Header', 'Date'])
+    
+## INSERT CVC AND N INVESTMENTS ##
+CVC = "Verizon"
+num_inv = 2
 
-## ITERATE STARTUPS ##
+## INSERT ROW -2 ILOC OF CVC ##
+i = 2 -2
+startups = [None]*num_inv
+for i in range(len(startups)):
+    startups[i] = df.iloc[i, 1]
+
+## TARGET DATAFRAME INFO ##
+alliances = pd.DataFrame(columns=['Startup', 'Header', 'Date'])
+
+
 for startup in startups:
     
 ## SEARCH QUERY ##
     try:
-        search = WebDriverWait(driver, 20).until(
+        search = WebDriverWait(driver, 30).until(
             EC.presence_of_element_located((By.ID, "searchTerms"))
         )
         search.clear()
-        search.send_keys(CVC + " and " + startup + " and " + " headline(teams up) or headline(agreement)")
+        search.send_keys("headline(" + CVC + ") and headline(" + startup + ") and headline(teams up) or headline(agreement)")
         search.send_keys(Keys.RETURN)
         
+        # solo alleanze tech, aggiungere termini
+
     
-## SAVE ARTICLES' DATA ##
+## FIND ARTICLES' DATA ##
     finally:
         
         try:
@@ -42,32 +51,30 @@ for startup in startups:
                 EC.presence_of_element_located((By.ID, "ybvnk"))
             )        
             
-# dropdownmenu = main.find_element_by_class_name("dropdown")
-# order = dropdownmenu.find_element_by_xpath("//button[5]").click()
-            
             articles = main.find_elements_by_xpath("//*[starts-with(@class,'row_sr')]")
-            headers = main.find_elements_by_xpath("//h2[@class='doc-title translate']")
             dates = main.find_elements_by_xpath("//dd[4]")
+            headers = main.find_elements_by_xpath("//h2[@class='doc-title translate']")
             
             i = 0            
             for i in range(len(articles)):                
-                df.loc[i, 'Startup'] = startup
+                alliances.loc[i, 'Startup'] = startup
             i = 0
             for header in headers: 
-                df.loc[i, 'Header'] = header.text
+                alliances.loc[i, 'Header'] = header.text
                 i += 1
             i = 0
             for date in dates:    
-                df.loc[i, 'Date'] = date.text
-                i += 1
-                            
-                
+                alliances.loc[i, 'Date'] = date.text
+                i += 1                                        
 # discard close dates
-
-# solo alleanze tech, aggiungere termini
 
     
         finally:
-            time.sleep(5)
+            time.sleep(5)            
 
-print(df)
+print(alliances)
+
+## SAVE DATA ON EXCEL ##
+writer = pd.ExcelWriter("C:/Users/andre/OneDrive/Desktop/CVC_alliances.xlsx")
+alliances.to_excel(writer, CVC)
+writer.save()
