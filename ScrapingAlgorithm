@@ -7,6 +7,7 @@ from selenium.webdriver.support import expected_conditions as EC
 
 import time
 import pandas as pd
+from openpyxl import load_workbook
 
 path = "C:/Program Files (x86)/chromedriver.exe"
 driver = webdriver.Chrome(path)
@@ -41,14 +42,13 @@ for startup in startups:
         search.send_keys(Keys.RETURN)
         
         # solo alleanze tech, aggiungere termini
-
     
 ## FIND ARTICLES' DATA ##
     finally:
         
         try:
             main = WebDriverWait(driver, 30).until(
-                EC.presence_of_element_located((By.ID, "ybvnk"))
+                EC.presence_of_element_located((By.ID, "xzvnk"))
             )        
             
             articles = main.find_elements_by_xpath("//*[starts-with(@class,'row_sr')]")
@@ -67,14 +67,18 @@ for startup in startups:
                 alliances.loc[i, 'Date'] = date.text
                 i += 1                                        
 # discard close dates
-
     
         finally:
-            time.sleep(5)            
-
+            time.sleep(1)   
+            
 print(alliances)
+driver.quit()
 
 ## SAVE DATA ON EXCEL ##
-writer = pd.ExcelWriter("C:/Users/andre/OneDrive/Desktop/CVC_alliances.xlsx")
-alliances.to_excel(writer, CVC)
+excel_path = "C:/Users/andre/OneDrive/Desktop/CVC_alliances.xlsx"
+writer = pd.ExcelWriter(excel_path, engine = 'openpyxl')
+writer.book = load_workbook(excel_path)
+
+alliances.to_excel(writer, sheet_name=CVC)
 writer.save()
+writer.close()
