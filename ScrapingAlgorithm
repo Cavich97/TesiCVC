@@ -17,14 +17,16 @@ df = pd.read_excel("C:/Users/andre/OneDrive/Desktop/CVC_test.xlsx")
 
     
 ## INSERT CVC AND N INVESTMENTS ##
-CVC = "Verizon"
+CVC = "Microsoft"
 num_inv = 2
 
 ## INSERT ROW -2 ILOC OF CVC ##
-i = 2 -2
+i = 4 -2
+j = 0
 startups = [None]*num_inv
-for i in range(len(startups)):
-    startups[i] = df.iloc[i, 1]
+for i in range(i, i+num_inv, 1):
+    startups[j] = df.iloc[i, 1]
+    j += 1
 
 ## TARGET DATAFRAME INFO ##
 alliances = pd.DataFrame(columns=['Startup', 'Header', 'Date'])
@@ -48,7 +50,7 @@ for startup in startups:
         
         try:
             main = WebDriverWait(driver, 30).until(
-                EC.presence_of_element_located((By.ID, "xzvnk"))
+                EC.presence_of_element_located((By.ID, "wzvnk"))
             )        
             
             articles = main.find_elements_by_xpath("//*[starts-with(@class,'row_sr')]")
@@ -80,5 +82,6 @@ writer = pd.ExcelWriter(excel_path, engine = 'openpyxl')
 writer.book = load_workbook(excel_path)
 
 alliances.to_excel(writer, sheet_name=CVC)
+
 writer.save()
 writer.close()
