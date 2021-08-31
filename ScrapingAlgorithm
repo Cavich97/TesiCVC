@@ -17,20 +17,22 @@ df = pd.read_excel("C:/Users/andre/OneDrive/Desktop/CVC_test.xlsx")
 
     
 ## INSERT CVC AND N INVESTMENTS ##
-CVC = "Microsoft"
-num_inv = 2
+CVC = "Bertelsmann"
+num_inv = 64
 
 ## INSERT ROW -2 ILOC OF CVC ##
-i = 4 -2
-j = 0
+row = 595 -2
+counter = 0
 startups = [None]*num_inv
-for i in range(i, i+num_inv, 1):
-    startups[j] = df.iloc[i, 1]
-    j += 1
+for row in range(row, row+num_inv, 1):
+    startups[counter] = df.iloc[row, 1]
+    counter += 1
 
 ## TARGET DATAFRAME INFO ##
 alliances = pd.DataFrame(columns=['Startup', 'Header', 'Date'])
-
+i = 0
+j = 0
+k = 0
 
 for startup in startups:
     
@@ -40,7 +42,7 @@ for startup in startups:
             EC.presence_of_element_located((By.ID, "searchTerms"))
         )
         search.clear()
-        search.send_keys("headline(" + CVC + ") and headline(" + startup + ") and headline(teams up) or headline(agreement)")
+        search.send_keys("headline(" + CVC + ") and headline(" + startup + ") and (headline(joint venture) or headline(partnership) or headline(collaboration) or headline(agreement) or headline(partner) headline (alliance) or headline(partners) or headline(partnered) or headline(collaborate) or headline (collaborated) or headline(collaborates) or headline(cooperation) or headline(cooperate) or headline(cooperates) or headline(co-development) or headline(teams up) or headline(team up)) or (term(“joint ventures”) or term(“alliances & partnerships”) or term(“strategic partnerships”) or term(“contract/agreement”)) and not (headline(report) or headline(celebrate) or headline(celebrates) or headline(terminate) or headline(terminates) or headline(grant) or headline(grants) or headline(award) or headline(awards) or headline(fellowship) or headline(conference) or headline(conferences) or headline(recognize) or headline(recognise) or headline(recognised) or headline(recognized) or headline(recognition) or headline(awarded) or headline(exec) or headline(executive) or headline(executives) or headline(testimony) or headline(testifies) or headline(antitrust) or headline(sued) or headline(sue) or headline(sues) or headline(honor) or headline(honored) or headline(honors) or headline(plans) or headline(seek) or headline(seek) or headline(look) or headline(looks) or headline(looking) or headline(speaks) or headline(speak) or headline(expect) or headline(expects) or headline(named) or headline(acquire) or headline(acquired) or headline(acquires) or headline(sell) or headline(sells) or headline(take over) or headline(sale) or headline(acquisition)")
         search.send_keys(Keys.RETURN)
         
         # solo alleanze tech, aggiungere termini
@@ -57,17 +59,15 @@ for startup in startups:
             dates = main.find_elements_by_xpath("//dd[4]")
             headers = main.find_elements_by_xpath("//h2[@class='doc-title translate']")
             
-            i = 0            
-            for i in range(len(articles)):                
+            for article in articles:                
                 alliances.loc[i, 'Startup'] = startup
-            i = 0
-            for header in headers: 
-                alliances.loc[i, 'Header'] = header.text
                 i += 1
-            i = 0
+            for header in headers: 
+                alliances.loc[j, 'Header'] = header.text
+                j += 1
             for date in dates:    
-                alliances.loc[i, 'Date'] = date.text
-                i += 1                                        
+                alliances.loc[k, 'Date'] = date.text
+                k += 1                                        
 # discard close dates
     
         finally:
@@ -85,3 +85,4 @@ alliances.to_excel(writer, sheet_name=CVC)
 
 writer.save()
 writer.close()
+
