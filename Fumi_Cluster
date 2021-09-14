@@ -1,0 +1,65 @@
+RICORDA DI ELIMINARE RIGHE CON VALORI VUOTI ALL'INIZIO
+cluster wardslinkage zfriendl zgeocultdi~r zinddiver, measure(L2squared)
+
+cluster dendrogram _clus_1, cutnumber(20)
+
+*stopping rules
+// calinski rule --> piu grande F meglio 
+cluster stop _clus_1, rule(calinski)
+// duda-hart rule --> piu grande Je(1)/Je(2) e piu' piccolo T
+cluster stop _clus_1, rule(duda)
+
+*SOLUZIONE A TRE CLUSTER 
+*generate cluster variable
+cluster generate clu1 = groups(3), name(_clus_1)
+
+*plot cluster frequencies
+hist clu1, addl frequency
+
+*K-means cluster
+cluster kmeans zfriendl zgeocultdi~r zinddiver, k(3) measure(L2) start(group(clu1)) keepcenters
+rename _clus_2 clu2_kmeans
+hist clu2_kmeans, addl frequency
+-------------------
+*descrittive cluster
+*std
+by clu2_kmeans, sort : summarize zw_delega1 fformalcoord ftacit fongoing z_ntmt z_formaliz z_retribtmt z_retribceo 
+*non std
+by clu2_kmeans, sort : summarize w_delega1 fformalcoord ftacit fongoing ntmt formaliz retribtmt retribceo 
+-------------------- 
+rename clu2_kmeans CVCtype
+ 
+*Generazione dummy di configurazione
+tabulate CVCtype, gen(config)
+
+ 
+anova zfriendl CVCtype, partial
+anova zgeocultdi~r CVCtype, partial
+anova zinddiver CVCtype, partial
+
+->[testo le ipotesi cosi: hist specializ by(CVCtype)]
+
+oneway zfriendl CVCtype, scheffe
+oneway zgeocultdi~r CVCtype, scheffe
+oneway zinddiver CVCtype, scheffe
+
+
+
+Kruskal-Wallis H test  [ASSUMPTIONS: INDEPENDENT SAMPLES]
+kwallis zfriendl, by(CVCtype)
+kwallis zgeocultdi~r, by(CVCtype)
+kwallis zinddiver, by(CVCtype)
+
+Following rejecttion of HW H Test hypotheses, a Dunn test is performed [user-made package dunntest was installed]. Ho trovato bonferroni come uno dei più utilizzati, ma non sono sicuro di quale adjustment sia migliore.
+
+dunntest zfriendl, by(CVCtype) ma(bonferroni)
+dunntest zgeocultdi~r, by(CVCtype) ma(bonferroni)
+dunntest zinddiver, by(CVCtype) ma(bonferroni)	
+
+
+NB for K-W H Test: If your distributions have the same shape, you can use Stata to carry out a Kruskal-Wallis H test to compare the medians of your dependent variable (e.g., "engagement score") for the different groups of the independent variable you are interested in (e.g., the groups, Caucasian, African American and Hispanic, for the independent variable, "ethnicity"). However, if your distributions have a different shape, you can only use the Kruskal-Wallis H test to compare mean ranks. Having similar distributions simply allows you to use medians to represent a shift in location between the groups (as illustrated in the diagram on the left above). As such, it is very important to check this assumption or you can end up interpreting your results incorrectly.
+
+NB: Kruskal –Wallis tests that data are not from the same population.
+
+-> per comparare due clusters: Mann–Whitney U test? https://en.wikipedia.org/wiki/Mann%E2%80%93Whitney_U_test
+
