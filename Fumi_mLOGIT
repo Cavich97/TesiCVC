@@ -1,0 +1,94 @@
+asdoc corr, label replace star(0.01)
+asdoc pwcorr, label replace star(0.1)
+
+[DA: https://www.youtube.com/watch?v=iqypob4My4o]
+
+* Dependent variable has 4 categories denoted 1,2,3,4,5
+**NB: VARIABILI CATEGORICHE-> DA ANNOTARLE CON .i DAVANTI
+global ylist orgclus
+global xlist numinv zfriendl zgeocultdi~r zinddiver percsyndf~v i.us
+describe $ylist $xlist 
+summarize $ylist $xlist 
+tabulate $ylist
+
+* Multinomial logit model with base outcome the most frequent alternative 
+mlogit $ylist $xlist	
+----------------
+* Multinomial logit with base outcome alternative 2 
+mlogit $ylist $xlist, baseoutcome(2) 
+------------------
+
+margins, dydx(*) atmeans
+
+* Multinomial logit marginal effects 
+margins, dydx(*) atmeans predict(pr outcome(1))
+margins, dydx(*) atmeans predict(pr outcome(2)) 
+margins, dydx(*) atmeans predict(pr outcome(3)) 
+margins, dydx(*) atmeans predict(pr outcome(4)) 
+margins, dydx(*) atmeans predict(pr outcome(5)) 
+
+
+* Multinomial logit predicted probabilities
+predict pmlogit1 pmlogit2 pmlogit3 pmlogit4 pmlogit5, pr 
+summarize pmlogit1 pmlogit2 pmlogit3 pmlogit4 pmlogit5
+tabulate $ylist
+--------------------------------
+
+* Multinomial PROBIT model with base outcome the most frequent alternative
+mprobit $ylist $xlist
+
+-----------
+* Multinomial probit with base outcome alternative 2
+mprobit $ylist $xlist, baseoutcome(2)
+-----------
+
+ * Multinomial probit marginal effects 
+margins, dydx(*) atmeans predict(pr outcome(1)) 
+margins, dydx(*) atmeans predict(pr outcome(2))
+margins, dydx(*) atmeans predict(pr outcome(3)) 
+margins, dydx(*) atmeans predict(pr outcome(4))
+margins, dydx(*) atmeans predict(pr outcome(5))
+
+ * Multinomial probit predicted probabilities 
+predict p1, outcome(1) 
+predict p2, outcome(2) 
+predict p3, outcome(3) 
+predict p4, outcome(4)
+predict p5, outcome(5) 
+ 
+summarize p1 p2 p3 p4 p5
+tabulate $ylist 
+
+-------------------------
+[TRAMITE SPOST13 PACKAGE SI PUO': https://jslsoc.sitehost.iu.edu/web_spost13/sp13_install.htm]
+IIA propriety: Recall that a critical assumption in the derivation of the multinomial logit model is that the disturbances (ε′s) are independently and identically distributed.
+
+*Independence of Irrelevant Alternatives (IIA) test (after logit regression)
+mlogtest, iia
+
+*NB: IIA is not assumed fro probit models
+*NB2: il test mlogtest, iia è ancora più completo (combina hausman + altri test)
+*NB3: Confronatre suest con altri test: https://www.stata.com/manuals13/rsuest.pdf
+*NB4: Come reference da citare, il libro: REGRESSION MODELS FOR CATEGORICAL DEPENDENT VARIABLES USING STATA è perfetto
+
+*Test di multicollinearità si può misurare con Collin [comando da UCLA->https://stats.idre.ucla.edu/stata/webbooks/reg/chapter2/stata-webbooksregressionwith-statachapter-2-regression-diagnostics/. Mostra multiple misure di collinearità e non necessita del comando regress. da aggiungere solo variabili indipendenti]
+*di solito si usa il condition index, che se è più alto di 10-> collinearità presente (indica instabilità globale) \  vif >5 with tolerance <0.2 -> multicollinearity
+collin $xlist
+
+----------
+*Per fare un Likelihood test ratio (https://stats.idre.ucla.edu/stata/faq/how-can-i-perform-the-likelihood-ratio-wald-and-lagrange-multiplier-score-test-in-stata/: faccio girare i due modelli e stor le log likelihood cosi ("The tests below will allow us to test whether adding both of these variables to the model significantly improves the fit of the model")
+estimates store m1
+*NB: PRIMA ELIMINO LE DUE OSSERVAZIONI PER CUI NON HO ALCUNI DATI
+
+*m2 è il modello con le due variabili aggiuntive (in questo caso)
+estimates store m2
+*Si performa il test, con 2 degrees of freedom (2 variabili droppate).
+lrtest m1 m2
+
+**automatizzo tutto il processo con:
+mlogtest, lr
+**oppure
+mlogtest, lr set(zfriendl zgeocultdiver zinddiver)
+
+*grafico interessante
+marginsplot
