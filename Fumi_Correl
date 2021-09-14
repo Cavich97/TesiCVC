@@ -1,0 +1,13 @@
+asdoc pwcorr, label replace star(all)
+ 
+
+Formula (with perfect formatting): 
+- asdoc pwcorr, label replace star(0.01)
+- asdoc corr, label replace star(0.01)
+Parto dal 10%
+Con replace coloro (tramite opzione "format") in base a ~*, con una parola a caso ("dog"). A quel punto rifaccio replace, senza vincoli di format e rimpiazzo "dog" con nulla.
+
+
+There are two kinds of difference between both commands. The first one is that with "corr", Stata uses listwise deletion. That is, the correlation matrix is computed only for those cases which do not have any missing value in any of the variables on the list. In contrast, "pwcorr" uses pairwise deletion; in other words, each correlation is computed for all cases that do not have missing values for this specific pair of variables.
+Questa qua riportata è correlate, elimina quindi diverse osservazioni (8)
+Per maggiori infoirmazioni: https://www.stata.com/manuals13/rcorrelate.pdf
