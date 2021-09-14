@@ -1,7 +1,4 @@
 
-
-## FUMI ##
-
 Per prima cosa, elimino bluecross e KDDI (no data PercSubsInv) + Saudi Aramco (non possiedono cultural index)
 ds
 *copio le variabili, tranne cvcname
