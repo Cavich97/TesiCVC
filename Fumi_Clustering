@@ -61,5 +61,6 @@ NB for K-W H Test: If your distributions have the same shape, you can use Stata 
 
 NB: Kruskal –Wallis tests that data are not from the same population.
 
--> per comparare due clusters: Mann–Whitney U test? https://en.wikipedia.org/wiki/Mann%E2%80%93Whitney_U_test
+-> per comparare due clusters: Mann–Whitney U test? 
+https://en.wikipedia.org/wiki/Mann%E2%80%93Whitney_U_test
 
