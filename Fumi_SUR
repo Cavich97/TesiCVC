@@ -44,8 +44,6 @@ test [$y1list]$x5=[$y2list]$x5= [$y3list]$x5= [$y4list]$x5=0
 
 
 
-
-
 [E' CORRETTO TESTARE ENTRAMBE?]
 
 
@@ -59,8 +57,6 @@ asdoc test ([$y1list]$x5 =[$y2list]$x5) ([$y1list]$x5 =[$y3list]$x5) ([$y1list]$
 asdoc test ([$y1list]$x_control2 =[$y2list]$x_control2) ([$y1list]$x_control2 =[$y3list]$x_control2) ([$y1list]$x_control2= [$y4list]$x_control2) ([$y2list]$x_control2 = [$y3list]$x_control2) ([$y3list]$x_control2 = [$y4list]$x_control2), mtest(bonferroni)
 asdoc test ([$y1list]$x_control3 =[$y2list]$x_control3) ([$y1list]$x_control3 =[$y3list]$x_control3) ([$y1list]$x_control3= [$y4list]$x_control3) ([$y2list]$x_control3 = [$y3list]$x_control3) ([$y3list]$x_control3 = [$y4list]$x_control3), mtest(bonferroni)
 asdoc test ([$y1list]$x_control4 =[$y2list]$x_control4) ([$y1list]$x_control4 =[$y3list]$x_control4) ([$y1list]$x_control4= [$y4list]$x_control4) ([$y2list]$x_control4= [$y3list]$x_control4) ([$y3list]$x_control4 = [$y4list]$x_control4), mtest(bonferroni)
-
-
 
 
 
