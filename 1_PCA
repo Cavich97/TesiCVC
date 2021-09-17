@@ -1,41 +1,50 @@
+edit
 
-Per prima cosa, elimino bluecross e KDDI (no data PercSubsInv) + Saudi Aramco (non possiedono cultural index)
+* elimino bluecross e KDDI (no data PercSubsInv) + Saudi Aramco (non possiedono cultural index)
 ds
 *copio le variabili, tranne cvcname
 
-global xlist avgagefirs~v avground avgroundfi~v firstround~q avggeodistcs percnewcou~y avgcultdis~s  geoentropy indtotentr~y indunrentr~y   percnewind        
 
-*ncomp posso cambiare in numero naturalmente.
+destring mediadiageatfirstinvestmentround, replace float dpcomma
+destring XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX, replace float dpcomma
+
+
+global xlist XXXXXXXXXXXXXX YYYYYYYYYYYYY ZZZZZZZZZZZZZZ
+
+* ncomp posso cambiare in numero naturalmente.
 global id cvcname
 global ncomp 3
 
+
 describe $xlist
 summarize $xlist
+
+
 corr $xlist
 asdoc pwcorr, label replace star(all)
-*NB: corr matrix uscirà leggermente diversa perchè ho eliminato alcuni dati
 
-* Principal component analysis (PCA)
+
 pca $xlist
 
 * Scree plot of the eigenvalues
 screeplot
 screeplot, yline(1)
 
-* Principal component analysis ->change number of components
+* Principal component analysis --> change number of components
 pca $xlist, mineigen(1) blanks(.3)
 pca $xlist, comp($ncomp) 
 pca $xlist, comp($ncomp) blanks(.3)
 
-*in questo caso, quello che mi è venuto meglio è 
+* in questo caso, quello venuto meglio è 
 rotate, varimax
 rotate, varimax blanks(.3)
 rotate, clear
 
-*in questo caso, quello che mi è venuto meglio è 
+* in questo caso, quello venuto meglio è 
 rotate, promax
 rotate, promax blanks(.3)
 rotate, clear	
+
 
 * Scatter plots of the loadings and score variables
 loadingplot
