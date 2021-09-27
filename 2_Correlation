@@ -1,4 +1,5 @@
-asdoc pwcorr, label replace star(all)
+corr $xlist
+asdoc pwcorr, label replace star(all) 
  
 
 * Formula (with perfect formatting): 
