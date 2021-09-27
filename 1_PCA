@@ -19,20 +19,22 @@ destring geoentropy, replace float dpcomma
 destring indtotentropy, replace float dpcomma
 destring indunrentropy, replace float dpcomma
 destring indrelentropy, replace float dpcomma
-destring avgivc1, replace float dpcomma
-destring avgivc2, replace float dpcomma
-destring avgfinint1, replace float dpcomma
-destring avgfinint2, replace float dpcomma
-destring avgparent1ivc, replace float dpcomma
-destring avgparent2ivc, replace float dpcomma
-destring avgparent2finint, replace float dpcomma
+
+destring avgivc1, replace float percent
+destring avgivc2, replace float percent
+destring avgfinint1, replace float percent
+destring avgfinint2, replace float percent
+destring avgparent1ivc, replace float percent
+destring avgparent2ivc, replace float percent
+destring avgparent2finint, replace float percent
 
 destring cultdistcp, replace float dpcomma
-destring percipoma, replace float dpcomma
-destring firstroundfreq, replace float dpcomma
+
+destring percipoma, replace float percent
+destring firstroundfreq, replace float percent
 destring medianroundfirstinv, replace float dpcomma
-destring percipoma10y, replace float dpcomma
-destring percfemalemanagers, replace float dpcomma
+destring percipoma10y, replace float percent
+destring percfemalemanagers, replace float percent
 
 destring avgalliances20y, replace float dpcomma
 destring avgalliances5y, replace float dpcomma
