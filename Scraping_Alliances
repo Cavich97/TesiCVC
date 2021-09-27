@@ -17,8 +17,8 @@ df = pd.read_excel("C:/Users/andre/OneDrive/Desktop/CVC_test.xlsx")
 
     
 ## INSERT CVC AND N INVESTMENTS ##
-CVC = "Bertelsmann"
-num_inv = 64
+CVC = "CVC Name"
+num_inv = 
 
 ## INSERT ROW -2 ILOC OF CVC ##
 row = 595 -2
