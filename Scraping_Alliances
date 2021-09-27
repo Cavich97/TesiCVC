@@ -21,7 +21,7 @@ CVC = "CVC Name"
 num_inv = 
 
 ## INSERT ROW -2 ILOC OF CVC ##
-row = 595 -2
+row =  -2
 counter = 0
 startups = [None]*num_inv
 for row in range(row, row+num_inv, 1):
