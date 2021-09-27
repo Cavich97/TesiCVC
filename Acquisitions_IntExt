@@ -1,0 +1,87 @@
+from selenium import webdriver
+from selenium.webdriver.common.keys import Keys
+
+from selenium.webdriver.common.by import By
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
+
+import time
+import pandas as pd
+from openpyxl import load_workbook
+
+path = "C:/Program Files (x86)/chromedriver.exe"
+driver = webdriver.Chrome(path)
+driver.get("http://www.nexisuni.com/")
+
+df = pd.read_excel("C:/Users/andre/OneDrive/Desktop/CVC_int-ext.xlsx")
+
+
+## TARGET DATAFRAME INFO ##
+acquisitions = pd.DataFrame(columns=['Startup', 'Header', 'Date'])
+
+i = 0
+l = 0
+j = 0
+k = 0
+
+for i in range(1840, 2299):
+    
+    CVC = df.iloc[i, 0]
+    startup = df.iloc[i, 1]
+    
+    
+## SEARCH QUERY ##
+    try:
+        search = WebDriverWait(driver, 30).until(
+            EC.presence_of_element_located((By.ID, "searchTerms"))
+        )
+        time.sleep(3)
+        search.clear()
+        search.send_keys("headline(" + CVC + ") and headline(" + startup + ") and term(“acquisitions” #78plus#)")
+        search.send_keys(Keys.RETURN)
+        
+    
+## FIND ARTICLES' DATA ##
+    finally:
+        
+        try:
+            main = WebDriverWait(driver, 30).until(
+                EC.presence_of_element_located((By.ID, "yzvnk"))
+            )        
+            
+            articles = main.find_elements_by_xpath("//*[starts-with(@class,'row_sr')]")
+            dates = main.find_elements_by_xpath("//dd[4]")
+            headers = main.find_elements_by_xpath("//h2[@class='doc-title translate']")
+            
+            if not articles:
+                print("Ext")
+                
+            else:
+                for article in articles:                
+                    acquisitions.loc[l, 'Startup'] = startup
+                    l += 1
+                for header in headers: 
+                    acquisitions.loc[j, 'Header'] = header.text
+                    j += 1
+                for date in dates:    
+                    acquisitions.loc[k, 'Date'] = date.text
+                    k += 1                
+                print("Int")
+                
+                
+        finally:
+            time.sleep(1)   
+            i += 1
+            
+
+driver.quit()
+
+## SAVE DATA ON EXCEL ##
+excel_path = "C:/Users/andre/OneDrive/Desktop/CVC_int-ext.RESULTS.xlsx"
+writer = pd.ExcelWriter(excel_path, engine = 'openpyxl')
+writer.book = load_workbook(excel_path)
+
+acquisitions.to_excel(writer)
+
+writer.save()
+writer.close()
