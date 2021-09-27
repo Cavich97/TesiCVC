@@ -36,14 +36,23 @@ destring medianroundfirstinv, replace float dpcomma
 destring percipoma10y, replace float percent
 destring percfemalemanagers, replace float percent
 
+replace avgalliances20y = subinstr(avgalliances20y, "-", "0",.)
+replace avgalliances5y = subinstr(avgalliances5y, "-", "0",.)
+replace percalliancesafterinv20y = subinstr(percalliancesafterinv20y, "-", "0",.)
+replace percalliancesafterinv5y = subinstr(percalliancesafterinv5y, "-", "0",.)
+replace perctechalliances20y = subinstr(perctechalliances20y, "-", "0",.)
+replace perctechalliances5y = subinstr(perctechalliances5y, "-", "0",.)
+replace percacquisitionsinternal20y = subinstr(percacquisitionsinternal20y, "-", "0",.)
+replace percacquisitionsinternal5y = subinstr(percacquisitionsinternal5y, "-", "0",.)
+
 destring avgalliances20y, replace float dpcomma
 destring avgalliances5y, replace float dpcomma
-destring percalliancesafterinv20y, replace float dpcomma
-destring percalliancesafterinv5y, replace float dpcomma
-destring perctechalliances20y, replace float dpcomma
-destring perctechalliances5y, replace float dpcomma
-destring percacquisitionsinternal20y, replace float dpcomma
-destring percacquisitionsinternal5y, replace float dpcomma
+destring percalliancesafterinv20y, replace float percent
+destring percalliancesafterinv5y, replace float percent
+destring perctechalliances20y, replace float percent
+destring perctechalliances5y, replace float percent
+destring percacquisitionsinternal20y, replace float percent
+destring percacquisitionsinternal5y, replace float percent
 
 
 
