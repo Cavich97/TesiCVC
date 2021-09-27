@@ -1,0 +1,33 @@
+pca $xlist
+
+* Scree plot of the eigenvalues
+screeplot
+screeplot, yline(1)
+
+* Principal component analysis --> change number of components
+pca $xlist, mineigen(1) blanks(.3)
+pca $xlist, comp($ncomp) 
+pca $xlist, comp($ncomp) blanks(.3)
+
+* in questo caso, quello venuto meglio è 
+rotate, varimax
+rotate, varimax blanks(.3)
+rotate, clear
+
+* in questo caso, quello venuto meglio è 
+rotate, promax
+rotate, promax blanks(.3)
+rotate, clear	
+
+
+* Scatter plots of the loadings and score variables
+loadingplot
+scoreplot
+scoreplot, mlabel($id)
+
+* Loadings/scores of the components
+estat loadings
+predict pc1 pc2 pc3 score
+
+* KMO measure of sampling adequacy
+estat kmo
