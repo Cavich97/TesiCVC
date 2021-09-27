@@ -5,15 +5,12 @@ ds
 *copio le variabili, tranne cvcname
 
 
-destring mediadiageatfirstinvestmentround, replace float dpcomma
+
 destring avgagefirstinv, replace float dpcomma
 destring avground, replace float dpcomma
 destring avgroundfirstinv, replace float dpcomma
 destring percsyndfirstinv, replace float dpcomma
 destring avgcultdistcs, replace float dpcomma
-
-* byte numipo numipoma
-
 
 destring percsubsidinv, replace float dpcomma
 destring percnewind, replace float dpcomma
@@ -30,14 +27,14 @@ destring avgparent1ivc, replace float dpcomma
 destring avgparent2ivc, replace float dpcomma
 destring avgparent2finint, replace float dpcomma
 
-* byte 
-destring XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX, replace float dpcomma
-destring XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX, replace float dpcomma
-destring XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX, replace float dpcomma
-destring XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX, replace float dpcomma
-destring XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX, replace float dpcomma
-destring XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX, replace float dpcomma
-destring XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX, replace float dpcomma
+destring cultdistcp, replace float dpcomma
+destring percipoma, replace float dpcomma
+destring firstroundfreq, replace float dpcomma
+destring medianroundfirstinv, replace float dpcomma
+destring percipoma10y, replace float dpcomma
+destring percfemalemanagers, replace float dpcomma
+
+destring numberofalliances5yr, replace float dpcomma
 destring XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX, replace float dpcomma
 destring XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX, replace float dpcomma
 
