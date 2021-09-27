@@ -6,7 +6,6 @@ edit
 ds
 
 
-
 replace avgalliances20y = subinstr(avgalliances20y, "-", "0",.)
 replace avgalliances5y = subinstr(avgalliances5y, "-", "0",.)
 replace percalliancesafterinv20y = subinstr(percalliancesafterinv20y, "-", "0",.)
@@ -56,7 +55,6 @@ destring percacquisitionsinternal5y, replace float percent
 global xlist numinv numstartup numfirstround avgagefirstinv avground avgroundfirstinv percsyndfirstinv avgcultdistcs numipo numipoma percsubsidinv percnewind percnewcountry avggeodistcs geoentropy indtotentropy indunrentropy indrelentropy avgivc1 avgivc2 avgfinint1 avgfinint2 avgparent1ivc avgparent2ivc avgparent2finint geodistcp cultdistcp percipoma firstroundfreq medianroundfirstinv percipoma10y reputation reputationipo nummanagers ethnicityentropy percfemalemanagers numalliances20y numstartupallied20y avgalliances20y numalliances5y numstartupallied5y avgalliances5y numalliancesafterinv20y percalliancesafterinv20y numalliancesafterinv5y percalliancesafterinv5y numtechalliances20y perctechalliances20y numtechalliances5y perctechalliances5y numacquisitions20y numacquisitionsinternal20y percacquisitionsinternal20y numacquisitions5y numacquisitionsinternal5y percacquisitionsinternal5y
 
 
-
 * ncomp posso cambiare in numero naturalmente.
 global id cvcname
 global ncomp 3
@@ -67,7 +65,7 @@ summarize $xlist
 
 
 corr $xlist
-asdoc pwcorr, label replace star(all)
+asdoc pwcorr, label replace star(all) 
 
 
 pca $xlist
