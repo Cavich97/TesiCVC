@@ -34,9 +34,14 @@ destring medianroundfirstinv, replace float dpcomma
 destring percipoma10y, replace float dpcomma
 destring percfemalemanagers, replace float dpcomma
 
-destring numberofalliances5yr, replace float dpcomma
-destring XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX, replace float dpcomma
-destring XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX, replace float dpcomma
+destring avgalliances20y, replace float dpcomma
+destring avgalliances5y, replace float dpcomma
+destring percalliancesafterinv20y, replace float dpcomma
+destring percalliancesafterinv5y, replace float dpcomma
+destring perctechalliances20y, replace float dpcomma
+destring perctechalliances5y, replace float dpcomma
+destring percacquisitionsinternal20y, replace float dpcomma
+destring percacquisitionsinternal5y, replace float dpcomma
 
 
 
