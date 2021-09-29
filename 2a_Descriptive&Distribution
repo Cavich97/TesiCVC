@@ -1,3 +1,8 @@
 describe $xlist
 summary $xlist
 
+histogram
+
+scatterplot
+
+graph combine name [name ...] [, options]
