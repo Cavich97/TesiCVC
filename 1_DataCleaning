@@ -28,6 +28,8 @@ destring geoentropy, replace float dpcomma
 destring indtotentropy, replace float dpcomma
 destring indunrentropy, replace float dpcomma
 destring indrelentropy, replace float dpcomma
+destring percinvoutside4digit, replace float percent
+destring percinvoutside2digit, replace float percent
 destring avgivc1, replace float percent
 destring avgivc2, replace float percent
 destring avgfinint1, replace float percent
@@ -39,6 +41,7 @@ destring cultdistcp, replace float dpcomma
 destring percipoma, replace float percent
 destring firstroundfreq, replace float percent
 destring medianroundfirstinv, replace float dpcomma
+destring percfirstinv, replace float percent
 destring percipoma10y, replace float percent
 destring ethnicityentropy, replace float dpcomma
 destring percfemalemanagers, replace float percent
