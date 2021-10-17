@@ -24,7 +24,7 @@ l = 0
 j = 0
 k = 0
 
-for i in range(1840, 2299):
+for i in range(0, 2299):
     
     CVC = df.iloc[i, 0]
     startup = df.iloc[i, 1]
