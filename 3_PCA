@@ -25,6 +25,19 @@ global xlist cultdistcp geodistcp
 pca $xlist
 loadingplot
 
+global xlist numalliances20y percalliances20y numstartupallied20y percstartupallied20y avgalliances20y numalliances5y percalliances5y numstartupallied5y percstartupallied5y avgalliances5y
+pca $xlist
+loadingplot
+
+global xlist numalliancesafterinv20y percalliancesafterinv20y numalliancesafterinv5y percalliancesafterinv5y
+pca $xlist
+loadingplot
+
+
+
+global xlist 
+pca $xlist
+loadingplot
 
 
 
