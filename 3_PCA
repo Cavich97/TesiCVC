@@ -34,8 +34,7 @@ pca $xlist
 loadingplot
 
 
-
-global xlist 
+global xlist numalliances5y percalliances5y numstartupallied5y percstartupallied5y avgalliances5y numalliancesafterinv5y percalliancesafterinv5y 
 pca $xlist
 loadingplot
 
