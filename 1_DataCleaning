@@ -45,25 +45,26 @@ destring percfirstinv, replace float percent
 destring percipoma10y, replace float percent
 destring ethnicityentropy, replace float dpcomma
 destring percfemalemanagers, replace float percent
+destring percalliances20y, replace float percent
+destring percstartupallied20y, replace float percent
+destring percalliances5y, replace float percent
+destring percstartupallied5y, replace float percent
+destring perctechalliancesafterinv20y, replace float percent
+destring perctechalliancesafterinv5y, replace float percent
+destring percacquisitions20y, replace float percent
+destring percacquisitions5y, replace float percent
 destring avgalliances20y, replace float dpcomma
 destring avgalliances5y, replace float dpcomma
 destring percalliancesafterinv20y, replace float percent
 destring percalliancesafterinv5y, replace float percent
 destring perctechalliances20y, replace float percent
 destring perctechalliances5y, replace float percent
+destring perccommalliances20y, replace float percent
+destring perccommalliances5y, replace float percent
 destring percacquisitionsinternal20y, replace float percent
 destring percacquisitionsinternal5y, replace float percent
 
-destring percalliances20y, replace float percent
-destring percstartupallied20y, replace float percent
-destring numalliances5y, replace float dpcomma
-destring percalliances5y, replace float percent
-destring percstartupallied5y, replace float percent
-destring numalliancesafterinv20y, replace float dpcomma
-destring perctechalliancesafterinv20y, replace float percent
-destring perctechalliancesafterinv5y, replace float percent
-destring percacquisitions20y, replace float percent
-destring percacquisitions5y, replace float percent
+
 
 
 
