@@ -38,6 +38,10 @@ global xlist numalliances5y percalliances5y numstartupallied5y percstartupallied
 pca $xlist
 loadingplot
 
+global xlist numacquisitions20y percacquisitions20y numacquisitionsinternal20y percacquisitionsinternal20y numacquisitions5y percacquisitions5y numacquisitionsinternal5y percacquisitionsinternal5y
+pca $xlist
+loadingplot
+
 
 
 * ncomp posso cambiare in numero naturalmente.
