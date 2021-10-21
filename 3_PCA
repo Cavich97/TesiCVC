@@ -1,53 +1,63 @@
 global xlist numinv numstartup numfirstround avgagefirstinv avground avgroundfirstinv percsyndfirstinv avgcultdistcs numipo numipoma percsubsidinv percnewind percnewcountry avggeodistcs geoentropy indtotentropy indunrentropy indrelentropy avgivc1 avgivc2 avgfinint1 avgfinint2 avgparent1ivc avgparent2ivc avgparent2finint geodistcp cultdistcp percipoma firstroundfreq medianroundfirstinv percipoma10y reputation reputationipo nummanagers ethnicityentropy percfemalemanagers numalliances20y numstartupallied20y avgalliances20y numalliances5y numstartupallied5y avgalliances5y numalliancesafterinv20y percalliancesafterinv20y numalliancesafterinv5y percalliancesafterinv5y numtechalliances20y perctechalliances20y numtechalliances5y perctechalliances5y numacquisitions20y numacquisitionsinternal20y percacquisitionsinternal20y numacquisitions5y numacquisitionsinternal5y percacquisitionsinternal5y
 global id cvcname
 
+
+* Intermediate PCAs
+
 global xlist avgagefirstinv avground avgroundfirstinv
 pca $xlist
 loadingplot
 
 global xlist percnewcountry avggeodistcs geoentropy
-pca $xlist
-loadingplot
 
 global xlist indtotentropy indunrentropy indrelentropy
-pca $xlist
-loadingplot
 
 global xlist numinvoutside4digit percinvoutside4digit numinvoutside2digit percinvoutside2digit
-pca $xlist
-loadingplot
 
 global xlist avgivc1 avgivc2 avgfinint1 avgfinint2 avgparent1ivc avgparent2ivc avgparent2finint
-pca $xlist
-loadingplot
 
 global xlist cultdistcp geodistcp
-pca $xlist
-loadingplot
 
 global xlist numalliances20y percalliances20y numstartupallied20y percstartupallied20y avgalliances20y numalliances5y percalliances5y numstartupallied5y percstartupallied5y avgalliances5y
-pca $xlist
-loadingplot
 
 global xlist numalliancesafterinv20y percalliancesafterinv20y numalliancesafterinv5y percalliancesafterinv5y
-pca $xlist
-loadingplot
-
 
 global xlist numalliances5y percalliances5y numstartupallied5y percstartupallied5y avgalliances5y numalliancesafterinv5y percalliancesafterinv5y 
-pca $xlist
-loadingplot
 
 global xlist numacquisitions20y percacquisitions20y numacquisitionsinternal20y percacquisitionsinternal20y numacquisitions5y percacquisitions5y numacquisitionsinternal5y percacquisitionsinternal5y
-pca $xlist
-loadingplot
 
 
 
-* ncomp posso cambiare in numero naturalmente.
-global ncomp 3
+* FINAL PCAs
 
-pca $xlist
+INVESTMENT STRATEGY:
+global ncomp1 5
+global x1list avground avgroundfirstinv firstroundfreq percsyndfirstinv percnewcountry avggeodistcs geoentropy percnewind indtotentropy indunrentropy percinvoutside4digit percinvoutside2digit
+pca $x1list, comp($ncomp1) blanks(.3)
+rotate, varimax blanks(.3)
+rotate, clear
+
+ORGANIZATIONAL STRUCTURE:
+global ncomp2 2
+global x2list percsubsidinv cultdistcp geodistcp
+pca $x2list, comp($ncomp2) blanks(.3)
+
+HUMAN CAPITAL:
+global ncomp3 3
+global x3list avgfinint1 avgparent1ivc ethnicityentropy percfemalemanagers
+pca $x3list, comp($ncomp3) blanks(.3)
+rotate, varimax blanks(.3)
+rotate, clear
+
+PERFORMANCE:
+global ncomp4 3
+global x4list productivity reputation percipoma percacquisitionsinternal5y perctechalliances5y perctechalliancesafterinv5y
+pca $x4list, comp($ncomp4) blanks(.3)
+
+
+
+* INSTRUCTIONS 
+
 
 * Scree plot of the eigenvalues
 screeplot
