@@ -37,10 +37,16 @@ pca $x1list, comp($ncomp1) blanks(.3)
 rotate, varimax blanks(.3)
 rotate, clear
 
+predict earliness diversification distancecs industrydiversity
+
+
 ORGANIZATIONAL STRUCTURE:
 global ncomp2 2
 global x2list percsubsidinv cultdistcp geodistcp
 pca $x2list, comp($ncomp2) blanks(.3)
+
+predict distancecp subsidiarity 
+
 
 HUMAN CAPITAL:
 global ncomp3 3
@@ -49,10 +55,16 @@ pca $x3list, comp($ncomp3) blanks(.3)
 rotate, varimax blanks(.3)
 rotate, clear
 
+predict background gender ethnicity
+
+
 PERFORMANCE:
 global ncomp4 3
 global x4list productivity reputation percipoma percacquisitionsinternal5y perctechalliances5y perctechalliancesafterinv5y
 pca $x4list, comp($ncomp4) blanks(.3)
+
+predict 
+
 
 
 
