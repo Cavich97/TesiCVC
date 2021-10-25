@@ -63,6 +63,12 @@ destring perccommalliances20y, replace float percent
 destring perccommalliances5y, replace float percent
 destring percacquisitionsinternal20y, replace float percent
 destring percacquisitionsinternal5y, replace float percent
+destring productivity, replace float dpcomma
+destring perccommalliancesafterinv5y, replace float percent
+destring percacquisitionsexternal5y, replace float percent
+destring percipo5y, replace float percent
+
+
 
 
 
