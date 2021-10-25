@@ -1,1 +1,55 @@
+*DESTRING DATA
+
+destring avgagefirstinv, replace float dpcomma
+destring avground, replace float dpcomma
+destring avgroundfirstinv, replace float dpcomma
+destring percsyndfirstinv, replace float dpcomma
+destring avgcultdistcs, replace float dpcomma
+destring percsubsidinv, replace float dpcomma
+destring percnewind, replace float dpcomma
+destring percnewcountry, replace float dpcomma
+destring geoentropy, replace float dpcomma
+destring indtotentropy, replace float dpcomma
+destring indunrentropy, replace float dpcomma
+destring indrelentropy, replace float dpcomma
+destring percinvoutside4digit, replace float percent
+destring percinvoutside2digit, replace float percent
+destring avgivc1, replace float percent
+destring avgivc2, replace float percent
+destring avgfinint1, replace float percent
+destring avgfinint2, replace float percent
+destring avgparent1ivc, replace float percent
+destring avgparent2ivc, replace float percent
+destring avgparent2finint, replace float percent
+destring cultdistcp, replace float dpcomma
+destring percipoma, replace float percent
+destring firstroundfreq, replace float percent
+destring medianroundfirstinv, replace float dpcomma
+destring percfirstinv, replace float percent
+destring percipoma10y, replace float percent
+destring ethnicityentropy, replace float dpcomma
+destring percfemalemanagers, replace float percent
+destring percalliances20y, replace float percent
+destring percstartupallied20y, replace float percent
+destring percalliances5y, replace float percent
+destring percstartupallied5y, replace float percent
+destring perctechalliancesafterinv20y, replace float percent
+destring perctechalliancesafterinv5y, replace float percent
+destring percacquisitions20y, replace float percent
+destring percacquisitions5y, replace float percent
+destring avgalliances20y, replace float dpcomma
+destring avgalliances5y, replace float dpcomma
+destring percalliancesafterinv20y, replace float percent
+destring percalliancesafterinv5y, replace float percent
+destring perctechalliances20y, replace float percent
+destring perctechalliances5y, replace float percent
+destring perccommalliances20y, replace float percent
+destring perccommalliances5y, replace float percent
+destring percacquisitionsinternal20y, replace float percent
+destring percacquisitionsinternal5y, replace float percent
+destring productivity, replace float dpcomma
+destring perccommalliancesafterinv5y, replace float percent
+destring percacquisitionsexternal5y, replace float percent
+destring percipo5y, replace float percent
+
 
