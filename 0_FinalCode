@@ -113,14 +113,14 @@ cluster stop _clus_1, rule(calinski)
 cluster stop _clus_1, rule(duda)
 
 
-*SOLUZIONE A 6 CLUSTER 
+*SOLUZIONE A 5 CLUSTER 
 *generate cluster variable
-cluster generate clu1 = groups(6), name(_clus_1)
+cluster generate clu1 = groups(5), name(_clus_1)
 
 *plot cluster frequencies
 hist clu1, addl frequency
 
 *K-means cluster
-cluster kmeans cvcsize earliness industrydiversification geogdiversification industryexploration syndacate distanceparent autonomy managersparent femalemanagers ethnicitydiversification logproductivity, k(6) measure(L2squared) start(group(clu1)) keepcenters
+cluster kmeans cvcsize earliness industrydiversification geogdiversification industryexploration syndacate distanceparent autonomy managersparent femalemanagers ethnicitydiversification logproductivity, k(5) measure(L2squared) start(group(clu1)) keepcenters
 rename _clus_2 clu2_kmeans
 hist clu2_kmeans, addl frequency
