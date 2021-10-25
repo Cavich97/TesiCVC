@@ -91,6 +91,6 @@ predict managersparent femalemanagers ethnicitydiversification
 * CVC SIZE:
 global ncomp 1
 global xlist numinv numstartup nummanagers
-pca $xlist, comp($ncomp1) blanks(.33)
+pca $xlist, comp($ncomp) blanks(.33)
 
 predict cvcsize
