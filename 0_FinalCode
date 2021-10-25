@@ -101,6 +101,14 @@ predict cvcsize
 
 * CLUSTERING
 
+* K-MEANS ONLY
+
+cluster kmeans cvcsize earliness industrydiversification geogdiversification industryexploration syndacate distanceparent autonomy managersparent femalemanagers ethnicitydiversification logproductivity, k(3) measure(L2squared) name(clu2_kmeans) start(krandom)
+
+hist clu2_kmeans, addl frequency
+
+
+* WARDSLINKAGE + K-MEANS
 
 cluster wardslinkage cvcsize earliness industrydiversification geogdiversification industryexploration syndacate distanceparent autonomy managersparent femalemanagers ethnicitydiversification logproductivity, measure(L2squared)
 
