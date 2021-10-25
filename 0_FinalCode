@@ -1,4 +1,4 @@
-*DESTRING DATA
+* DESTRING DATA
 
 destring avgagefirstinv, replace float dpcomma
 destring avground, replace float dpcomma
@@ -53,3 +53,44 @@ destring percacquisitionsexternal5y, replace float percent
 destring percipo5y, replace float percent
 
 
+
+* PCA
+
+
+* INVESTMENT STRATEGY:
+global ncomp1 5
+global x1list avground avgroundfirstinv firstroundfreq percsyndfirstinv percnewcountry avggeodistcs geoentropy percnewind indtotentropy indunrentropy percinvoutside4digit percinvoutside2digit
+pca $x1list, comp($ncomp1) blanks(.3)
+rotate, varimax blanks(.3)
+rotate, clear
+
+predict earliness industrydiversification geogdiversification industryexploration syndacate
+
+
+* ORGANIZATIONAL STRUCTURE:
+global ncomp2 2
+global x2list percsubsidinv cultdistcp geodistcp
+pca $x2list, comp($ncomp2) blanks(.3)
+
+predict distanceparent autonomy 
+
+
+* HUMAN CAPITAL:
+global ncomp3 3
+global x3list avgfinint1 avgparent1ivc ethnicityentropy percfemalemanagers
+pca $x3list, comp($ncomp3) blanks(.3)
+rotate, varimax blanks(.3)
+rotate, clear
+
+predict managersparent femalemanagers ethnicitydiversification
+
+
+* PERFORMANCE: no PCA needed
+
+
+* CVC SIZE:
+global ncomp 1
+global xlist numinv numstartup nummanagers
+pca $xlist, comp($ncomp1) blanks(.33)
+
+predict cvcsize
