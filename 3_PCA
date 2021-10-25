@@ -30,41 +30,43 @@ global xlist numacquisitions20y percacquisitions20y numacquisitionsinternal20y p
 
 * FINAL PCAs
 
-INVESTMENT STRATEGY:
+* INVESTMENT STRATEGY:
 global ncomp1 5
 global x1list avground avgroundfirstinv firstroundfreq percsyndfirstinv percnewcountry avggeodistcs geoentropy percnewind indtotentropy indunrentropy percinvoutside4digit percinvoutside2digit
 pca $x1list, comp($ncomp1) blanks(.3)
 rotate, varimax blanks(.3)
 rotate, clear
 
-predict earliness diversification distancecs industrydiversity
+predict earliness industrydiversification geogdiversification industryexploration syndacate
 
 
-ORGANIZATIONAL STRUCTURE:
+* ORGANIZATIONAL STRUCTURE:
 global ncomp2 2
 global x2list percsubsidinv cultdistcp geodistcp
 pca $x2list, comp($ncomp2) blanks(.3)
 
-predict distancecp subsidiarity 
+predict distanceparent autonomy 
 
 
-HUMAN CAPITAL:
+* HUMAN CAPITAL:
 global ncomp3 3
 global x3list avgfinint1 avgparent1ivc ethnicityentropy percfemalemanagers
 pca $x3list, comp($ncomp3) blanks(.3)
 rotate, varimax blanks(.3)
 rotate, clear
 
-predict background gender ethnicity
+predict managersparent femalemanagers ethnicitydiversification
 
 
-PERFORMANCE:
-global ncomp4 3
-global x4list productivity reputation percipoma percacquisitionsinternal5y perctechalliances5y perctechalliancesafterinv5y
-pca $x4list, comp($ncomp4) blanks(.3)
+* PERFORMANCE: no PCA needed
 
-predict 
 
+* CVC SIZE:
+global ncomp 1
+global xlist numinv numstartup nummanagers
+pca $xlist, comp($ncomp1) blanks(.33)
+
+predict cvcsize
 
 
 
