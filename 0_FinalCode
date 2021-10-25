@@ -96,3 +96,31 @@ global xlist numinv numstartup nummanagers
 pca $xlist, comp($ncomp) blanks(.33)
 
 predict cvcsize
+
+
+
+* CLUSTERING
+
+
+cluster wardslinkage cvcsize earliness industrydiversification geogdiversification industryexploration syndacate distanceparent autonomy managersparent femalemanagers ethnicitydiversification logproductivity, measure(L2squared)
+
+cluster dendrogram _clus_1, cutnumber(20)
+
+*stopping rules
+* calinski rule --> piu grande F meglio 
+cluster stop _clus_1, rule(calinski)
+* duda-hart rule --> piu grande Je(1)/Je(2) e piu' piccolo T
+cluster stop _clus_1, rule(duda)
+
+
+*SOLUZIONE A 6 CLUSTER 
+*generate cluster variable
+cluster generate clu1 = groups(6), name(_clus_1)
+
+*plot cluster frequencies
+hist clu1, addl frequency
+
+*K-means cluster
+cluster kmeans cvcsize earliness industrydiversification geogdiversification industryexploration syndacate distanceparent autonomy managersparent femalemanagers ethnicitydiversification logproductivity, k(6) measure(L2squared) start(group(clu1)) keepcenters
+rename _clus_2 clu2_kmeans
+hist clu2_kmeans, addl frequency
