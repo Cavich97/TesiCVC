@@ -52,6 +52,8 @@ destring perccommalliancesafterinv5y, replace float percent
 destring percacquisitionsexternal5y, replace float percent
 destring percipo5y, replace float percent
 
+gen logproductivity = log(1+productivity)
+
 
 
 * PCA
