@@ -66,7 +66,7 @@ pca $x1list, comp($ncomp1) blanks(.3)
 rotate, varimax blanks(.3)
 rotate, clear
 
-predict earliness industrydiversification geogdiversification industryexploration syndacate
+predict latestage industrydiversification geogdiversification industryexploration syndacate
 
 
 * ORGANIZATIONAL STRUCTURE:
