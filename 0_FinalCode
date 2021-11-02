@@ -99,9 +99,8 @@ predict cvcsize
 
 
 
-* CLUSTERING
+* CLUSTERING 
 
-* WARDSLINKAGE (optimal number) + K-MEANS (clustering)
 
 cluster wardslinkage cvcsize latestage industrydiversification geogdiversification industryexploration syndacate distanceparent autonomy managersparent femalemanagers ethnicitydiversification logproductivity, measure(L2squared)
 cluster dendrogram _clus_1, cutnumber(20)
@@ -112,12 +111,25 @@ cluster stop _clus_1, rule(calinski)
 * duda-hart rule --> piu grande Je(1)/Je(2) e piu' piccolo T
 cluster stop _clus_1, rule(duda)
 
-
-* K-MEANS ONLY
-
+* 1) WARDSLINKAGE (optimal number) + K-MEANS (clustering)
 cluster kmeans cvcsize latestage industrydiversification geogdiversification industryexploration syndacate distanceparent autonomy managersparent femalemanagers ethnicitydiversification logproductivity, k(6) measure(L2squared) start(krandom)
 rename _clus_2 CVCtype
 hist CVCtype, addl frequency
+
+
+* 2) impose WARDSLINKAGE to K-MEANS
+*generate cluster variable
+cluster generate clu1 = groups(6), name(_clus_1)
+hist clu1, addl frequency
+*K-means cluster
+cluster kmeans cvcsize latestage industrydiversification geogdiversification industryexploration syndacate distanceparent autonomy managersparent femalemanagers ethnicitydiversification logproductivity, k(6) measure(L2squared) start(group(clu1)) keepcenters
+rename _clus_2 clu2_kmeans
+hist clu2_kmeans, addl frequency
+
+
+
+* Configiuration dummies
+tabulate CVCtype, gen(config)
 
 
 * K-Wallis H test
@@ -330,30 +342,9 @@ ranksum logproductivity if CVCtype==5 | CVCtype==6, by(CVCtype)
 
 
 
-* median U test
-median cvcsize, by(CVCtype)
-median latestage, by(CVCtype)
-median industrydiversification, by(CVCtype)
-median geogdiversification, by(CVCtype)
-median industryexploration, by(CVCtype)
-median syndacate, by(CVCtype)
-median distanceparent, by(CVCtype)
-median autonomy, by(CVCtype)
-median managersparent, by(CVCtype)
-median femalemanagers, by(CVCtype)
-median ethnicitydiversification, by(CVCtype)
-median logproductivity, by(CVCtype)
 
 
-* OTHER METHOD: impose Wardslinkage then K-means
 
-*generate cluster variable
-cluster generate clu1 = groups(6), name(_clus_1)
 
-*plot cluster frequencies
-hist clu1, addl frequency
 
-*K-means cluster
-cluster kmeans cvcsize latestage industrydiversification geogdiversification industryexploration syndacate distanceparent autonomy managersparent femalemanagers ethnicitydiversification logproductivity, k(6) measure(L2squared) start(group(clu1)) keepcenters
-rename _clus_2 clu2_kmeans
-hist clu2_kmeans, addl frequency
+
