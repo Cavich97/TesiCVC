@@ -55,6 +55,16 @@ destring percipo5y, replace float percent
 gen logproductivity = log(1+productivity)
 
 
+* SIZE LOG ADJUSTMENT
+gen lognuminv = log(1+numinv)
+gen lognumstartup = log(1+numstartup)
+gen lognummanagers = log(1+nummanagers)
+global ncomp 1
+global xlist lognuminv lognumstartup lognummanagers
+pca $xlist, comp($ncomp) blanks(.33)
+predict logcvcsize
+
+
 
 * PCA
 
@@ -99,7 +109,7 @@ predict cvcsize
 
 
 
-* CLUSTERING 
+* CLUSTERING (without logsize and 6 clusters)
 
 
 cluster wardslinkage cvcsize latestage industrydiversification geogdiversification industryexploration syndacate distanceparent autonomy managersparent femalemanagers ethnicitydiversification logproductivity, measure(L2squared)
@@ -111,18 +121,45 @@ cluster stop _clus_1, rule(calinski)
 * duda-hart rule --> piu grande Je(1)/Je(2) e piu' piccolo T
 cluster stop _clus_1, rule(duda)
 
-* 1) WARDSLINKAGE (optimal number) + K-MEANS (clustering)
-cluster kmeans cvcsize latestage industrydiversification geogdiversification industryexploration syndacate distanceparent autonomy managersparent femalemanagers ethnicitydiversification logproductivity, k(6) measure(L2squared) start(krandom)
-rename _clus_2 CVCtype
-hist CVCtype, addl frequency
-
-
-* 2) impose WARDSLINKAGE to K-MEANS
+* 1) impose WARDSLINKAGE to K-MEANS
 *generate cluster variable
 cluster generate clu1 = groups(6), name(_clus_1)
 hist clu1, addl frequency
 *K-means cluster
 cluster kmeans cvcsize latestage industrydiversification geogdiversification industryexploration syndacate distanceparent autonomy managersparent femalemanagers ethnicitydiversification logproductivity, k(6) measure(L2squared) start(group(clu1)) keepcenters
+rename _clus_2 CVCtype
+hist CVCtype, addl frequency
+
+* 2) WARDSLINKAGE (optimal number) + K-MEANS (clustering)
+cluster kmeans cvcsize latestage industrydiversification geogdiversification industryexploration syndacate distanceparent autonomy managersparent femalemanagers ethnicitydiversification logproductivity, k(6) measure(L2squared) start(krandom)
+rename _clus_2 CVCtype
+hist CVCtype, addl frequency
+
+
+
+* CLUSTERING (with logsize and 7 clusters)
+
+
+cluster wardslinkage logcvcsize latestage industrydiversification geogdiversification industryexploration syndacate distanceparent autonomy managersparent femalemanagers ethnicitydiversification logproductivity, measure(L2squared)
+cluster dendrogram _clus_1, cutnumber(20)
+
+* stopping rules: 
+* calinski rule --> piu grande F meglio 
+cluster stop _clus_1, rule(calinski)
+* duda-hart rule --> piu grande Je(1)/Je(2) e piu' piccolo T
+cluster stop _clus_1, rule(duda)
+
+* 1) impose WARDSLINKAGE to K-MEANS
+*generate cluster variable
+cluster generate clu1 = groups(7), name(_clus_1)
+hist clu1, addl frequency
+*K-means cluster
+cluster kmeans logcvcsize latestage industrydiversification geogdiversification industryexploration syndacate distanceparent autonomy managersparent femalemanagers ethnicitydiversification logproductivity, k(7) measure(L2squared) start(group(clu1)) keepcenters
+rename _clus_2 CVCtype
+hist CVCtype, addl frequency
+
+* 2) WARDSLINKAGE (optimal number) + K-MEANS (clustering)
+cluster kmeans logcvcsize latestage industrydiversification geogdiversification industryexploration syndacate distanceparent autonomy managersparent femalemanagers ethnicitydiversification logproductivity, k(7) measure(L2squared) start(krandom)
 rename _clus_2 CVCtype
 hist CVCtype, addl frequency
 
@@ -163,21 +200,28 @@ dunntest logproductivity, by(CVCtype) ma(bonferroni)
 
 * Wilkoxon-Mann–Whitney U test
 
-ranksum cvcsize if CVCtype==1 | CVCtype==2, by(CVCtype)
-ranksum cvcsize if CVCtype==1 | CVCtype==3, by(CVCtype)
-ranksum cvcsize if CVCtype==1 | CVCtype==4, by(CVCtype)
-ranksum cvcsize if CVCtype==1 | CVCtype==5, by(CVCtype)
-ranksum cvcsize if CVCtype==1 | CVCtype==6, by(CVCtype)
-ranksum cvcsize if CVCtype==2 | CVCtype==3, by(CVCtype)
-ranksum cvcsize if CVCtype==2 | CVCtype==4, by(CVCtype)
-ranksum cvcsize if CVCtype==2 | CVCtype==5, by(CVCtype)
-ranksum cvcsize if CVCtype==2 | CVCtype==6, by(CVCtype)
-ranksum cvcsize if CVCtype==3 | CVCtype==4, by(CVCtype)
-ranksum cvcsize if CVCtype==3 | CVCtype==5, by(CVCtype)
-ranksum cvcsize if CVCtype==3 | CVCtype==6, by(CVCtype)
-ranksum cvcsize if CVCtype==4 | CVCtype==5, by(CVCtype)
-ranksum cvcsize if CVCtype==4 | CVCtype==6, by(CVCtype)
-ranksum cvcsize if CVCtype==5 | CVCtype==6, by(CVCtype)
+ranksum logcvcsize if CVCtype==1 | CVCtype==2, by(CVCtype)
+ranksum logcvcsize if CVCtype==1 | CVCtype==3, by(CVCtype)
+ranksum logcvcsize if CVCtype==1 | CVCtype==4, by(CVCtype)
+ranksum logcvcsize if CVCtype==1 | CVCtype==5, by(CVCtype)
+ranksum logcvcsize if CVCtype==1 | CVCtype==6, by(CVCtype)
+ranksum logcvcsize if CVCtype==2 | CVCtype==3, by(CVCtype)
+ranksum logcvcsize if CVCtype==2 | CVCtype==4, by(CVCtype)
+ranksum logcvcsize if CVCtype==2 | CVCtype==5, by(CVCtype)
+ranksum logcvcsize if CVCtype==2 | CVCtype==6, by(CVCtype)
+ranksum logcvcsize if CVCtype==3 | CVCtype==4, by(CVCtype)
+ranksum logcvcsize if CVCtype==3 | CVCtype==5, by(CVCtype)
+ranksum logcvcsize if CVCtype==3 | CVCtype==6, by(CVCtype)
+ranksum logcvcsize if CVCtype==4 | CVCtype==5, by(CVCtype)
+ranksum logcvcsize if CVCtype==4 | CVCtype==6, by(CVCtype)
+ranksum logcvcsize if CVCtype==5 | CVCtype==6, by(CVCtype)
+ranksum logcvcsize if CVCtype==1 | CVCtype==7, by(CVCtype)
+ranksum logcvcsize if CVCtype==2 | CVCtype==7, by(CVCtype)
+ranksum logcvcsize if CVCtype==3 | CVCtype==7, by(CVCtype)
+ranksum logcvcsize if CVCtype==4 | CVCtype==7, by(CVCtype)
+ranksum logcvcsize if CVCtype==5 | CVCtype==7, by(CVCtype)
+ranksum logcvcsize if CVCtype==6 | CVCtype==7, by(CVCtype)
+
 
 ranksum latestage if CVCtype==1 | CVCtype==2, by(CVCtype)
 ranksum latestage if CVCtype==1 | CVCtype==3, by(CVCtype)
@@ -194,6 +238,12 @@ ranksum latestage if CVCtype==3 | CVCtype==6, by(CVCtype)
 ranksum latestage if CVCtype==4 | CVCtype==5, by(CVCtype)
 ranksum latestage if CVCtype==4 | CVCtype==6, by(CVCtype)
 ranksum latestage if CVCtype==5 | CVCtype==6, by(CVCtype)
+ranksum latestage if CVCtype==1 | CVCtype==7, by(CVCtype)
+ranksum latestage if CVCtype==2 | CVCtype==7, by(CVCtype)
+ranksum latestage if CVCtype==3 | CVCtype==7, by(CVCtype)
+ranksum latestage if CVCtype==4 | CVCtype==7, by(CVCtype)
+ranksum latestage if CVCtype==5 | CVCtype==7, by(CVCtype)
+ranksum latestage if CVCtype==6 | CVCtype==7, by(CVCtype)
 
 ranksum industrydiversification if CVCtype==1 | CVCtype==2, by(CVCtype)
 ranksum industrydiversification if CVCtype==1 | CVCtype==3, by(CVCtype)
@@ -210,6 +260,12 @@ ranksum industrydiversification if CVCtype==3 | CVCtype==6, by(CVCtype)
 ranksum industrydiversification if CVCtype==4 | CVCtype==5, by(CVCtype)
 ranksum industrydiversification if CVCtype==4 | CVCtype==6, by(CVCtype)
 ranksum industrydiversification if CVCtype==5 | CVCtype==6, by(CVCtype)
+ranksum industrydiversification if CVCtype==1 | CVCtype==7, by(CVCtype)
+ranksum industrydiversification if CVCtype==2 | CVCtype==7, by(CVCtype)
+ranksum industrydiversification if CVCtype==3 | CVCtype==7, by(CVCtype)
+ranksum industrydiversification if CVCtype==4 | CVCtype==7, by(CVCtype)
+ranksum industrydiversification if CVCtype==5 | CVCtype==7, by(CVCtype)
+ranksum industrydiversification if CVCtype==6 | CVCtype==7, by(CVCtype)
 
 ranksum geogdiversification if CVCtype==1 | CVCtype==2, by(CVCtype)
 ranksum geogdiversification if CVCtype==1 | CVCtype==3, by(CVCtype)
@@ -226,6 +282,12 @@ ranksum geogdiversification if CVCtype==3 | CVCtype==6, by(CVCtype)
 ranksum geogdiversification if CVCtype==4 | CVCtype==5, by(CVCtype)
 ranksum geogdiversification if CVCtype==4 | CVCtype==6, by(CVCtype)
 ranksum geogdiversification if CVCtype==5 | CVCtype==6, by(CVCtype)
+ranksum geogdiversification if CVCtype==1 | CVCtype==7, by(CVCtype)
+ranksum geogdiversification if CVCtype==2 | CVCtype==7, by(CVCtype)
+ranksum geogdiversification if CVCtype==3 | CVCtype==7, by(CVCtype)
+ranksum geogdiversification if CVCtype==4 | CVCtype==7, by(CVCtype)
+ranksum geogdiversification if CVCtype==5 | CVCtype==7, by(CVCtype)
+ranksum geogdiversification if CVCtype==6 | CVCtype==7, by(CVCtype)
 
 ranksum industryexploration if CVCtype==1 | CVCtype==2, by(CVCtype)
 ranksum industryexploration if CVCtype==1 | CVCtype==3, by(CVCtype)
@@ -242,6 +304,12 @@ ranksum industryexploration if CVCtype==3 | CVCtype==6, by(CVCtype)
 ranksum industryexploration if CVCtype==4 | CVCtype==5, by(CVCtype)
 ranksum industryexploration if CVCtype==4 | CVCtype==6, by(CVCtype)
 ranksum industryexploration if CVCtype==5 | CVCtype==6, by(CVCtype)
+ranksum industryexploration if CVCtype==1 | CVCtype==7, by(CVCtype)
+ranksum industryexploration if CVCtype==2 | CVCtype==7, by(CVCtype)
+ranksum industryexploration if CVCtype==3 | CVCtype==7, by(CVCtype)
+ranksum industryexploration if CVCtype==4 | CVCtype==7, by(CVCtype)
+ranksum industryexploration if CVCtype==5 | CVCtype==7, by(CVCtype)
+ranksum industryexploration if CVCtype==6 | CVCtype==7, by(CVCtype)
 
 ranksum syndacate if CVCtype==1 | CVCtype==2, by(CVCtype)
 ranksum syndacate if CVCtype==1 | CVCtype==3, by(CVCtype)
@@ -258,6 +326,12 @@ ranksum syndacate if CVCtype==3 | CVCtype==6, by(CVCtype)
 ranksum syndacate if CVCtype==4 | CVCtype==5, by(CVCtype)
 ranksum syndacate if CVCtype==4 | CVCtype==6, by(CVCtype)
 ranksum syndacate if CVCtype==5 | CVCtype==6, by(CVCtype)
+ranksum syndacate if CVCtype==1 | CVCtype==7, by(CVCtype)
+ranksum syndacate if CVCtype==2 | CVCtype==7, by(CVCtype)
+ranksum syndacate if CVCtype==3 | CVCtype==7, by(CVCtype)
+ranksum syndacate if CVCtype==4 | CVCtype==7, by(CVCtype)
+ranksum syndacate if CVCtype==5 | CVCtype==7, by(CVCtype)
+ranksum syndacate if CVCtype==6 | CVCtype==7, by(CVCtype)
 
 ranksum distanceparent if CVCtype==1 | CVCtype==2, by(CVCtype)
 ranksum distanceparent if CVCtype==1 | CVCtype==3, by(CVCtype)
@@ -274,6 +348,12 @@ ranksum distanceparent if CVCtype==3 | CVCtype==6, by(CVCtype)
 ranksum distanceparent if CVCtype==4 | CVCtype==5, by(CVCtype)
 ranksum distanceparent if CVCtype==4 | CVCtype==6, by(CVCtype)
 ranksum distanceparent if CVCtype==5 | CVCtype==6, by(CVCtype)
+ranksum distanceparent if CVCtype==1 | CVCtype==7, by(CVCtype)
+ranksum distanceparent if CVCtype==2 | CVCtype==7, by(CVCtype)
+ranksum distanceparent if CVCtype==3 | CVCtype==7, by(CVCtype)
+ranksum distanceparent if CVCtype==4 | CVCtype==7, by(CVCtype)
+ranksum distanceparent if CVCtype==5 | CVCtype==7, by(CVCtype)
+ranksum distanceparent if CVCtype==6 | CVCtype==7, by(CVCtype)
 
 ranksum autonomy if CVCtype==1 | CVCtype==2, by(CVCtype)
 ranksum autonomy if CVCtype==1 | CVCtype==3, by(CVCtype)
@@ -290,6 +370,12 @@ ranksum autonomy if CVCtype==3 | CVCtype==6, by(CVCtype)
 ranksum autonomy if CVCtype==4 | CVCtype==5, by(CVCtype)
 ranksum autonomy if CVCtype==4 | CVCtype==6, by(CVCtype)
 ranksum autonomy if CVCtype==5 | CVCtype==6, by(CVCtype)
+ranksum autonomy if CVCtype==1 | CVCtype==7, by(CVCtype)
+ranksum autonomy if CVCtype==2 | CVCtype==7, by(CVCtype)
+ranksum autonomy if CVCtype==3 | CVCtype==7, by(CVCtype)
+ranksum autonomy if CVCtype==4 | CVCtype==7, by(CVCtype)
+ranksum autonomy if CVCtype==5 | CVCtype==7, by(CVCtype)
+ranksum autonomy if CVCtype==6 | CVCtype==7, by(CVCtype)
 
 ranksum managersparent if CVCtype==1 | CVCtype==2, by(CVCtype)
 ranksum managersparent if CVCtype==1 | CVCtype==3, by(CVCtype)
@@ -306,6 +392,12 @@ ranksum managersparent if CVCtype==3 | CVCtype==6, by(CVCtype)
 ranksum managersparent if CVCtype==4 | CVCtype==5, by(CVCtype)
 ranksum managersparent if CVCtype==4 | CVCtype==6, by(CVCtype)
 ranksum managersparent if CVCtype==5 | CVCtype==6, by(CVCtype)
+ranksum managersparent if CVCtype==1 | CVCtype==7, by(CVCtype)
+ranksum managersparent if CVCtype==2 | CVCtype==7, by(CVCtype)
+ranksum managersparent if CVCtype==3 | CVCtype==7, by(CVCtype)
+ranksum managersparent if CVCtype==4 | CVCtype==7, by(CVCtype)
+ranksum managersparent if CVCtype==5 | CVCtype==7, by(CVCtype)
+ranksum managersparent if CVCtype==6 | CVCtype==7, by(CVCtype)
 
 ranksum femalemanagers if CVCtype==1 | CVCtype==2, by(CVCtype)
 ranksum femalemanagers if CVCtype==1 | CVCtype==3, by(CVCtype)
@@ -322,6 +414,12 @@ ranksum femalemanagers if CVCtype==3 | CVCtype==6, by(CVCtype)
 ranksum femalemanagers if CVCtype==4 | CVCtype==5, by(CVCtype)
 ranksum femalemanagers if CVCtype==4 | CVCtype==6, by(CVCtype)
 ranksum femalemanagers if CVCtype==5 | CVCtype==6, by(CVCtype)
+ranksum femalemanagers if CVCtype==1 | CVCtype==7, by(CVCtype)
+ranksum femalemanagers if CVCtype==2 | CVCtype==7, by(CVCtype)
+ranksum femalemanagers if CVCtype==3 | CVCtype==7, by(CVCtype)
+ranksum femalemanagers if CVCtype==4 | CVCtype==7, by(CVCtype)
+ranksum femalemanagers if CVCtype==5 | CVCtype==7, by(CVCtype)
+ranksum femalemanagers if CVCtype==6 | CVCtype==7, by(CVCtype)
 
 ranksum ethnicitydiversification if CVCtype==1 | CVCtype==2, by(CVCtype)
 ranksum ethnicitydiversification if CVCtype==1 | CVCtype==3, by(CVCtype)
@@ -338,6 +436,12 @@ ranksum ethnicitydiversification if CVCtype==3 | CVCtype==6, by(CVCtype)
 ranksum ethnicitydiversification if CVCtype==4 | CVCtype==5, by(CVCtype)
 ranksum ethnicitydiversification if CVCtype==4 | CVCtype==6, by(CVCtype)
 ranksum ethnicitydiversification if CVCtype==5 | CVCtype==6, by(CVCtype)
+ranksum ethnicitydiversification if CVCtype==1 | CVCtype==7, by(CVCtype)
+ranksum ethnicitydiversification if CVCtype==2 | CVCtype==7, by(CVCtype)
+ranksum ethnicitydiversification if CVCtype==3 | CVCtype==7, by(CVCtype)
+ranksum ethnicitydiversification if CVCtype==4 | CVCtype==7, by(CVCtype)
+ranksum ethnicitydiversification if CVCtype==5 | CVCtype==7, by(CVCtype)
+ranksum ethnicitydiversification if CVCtype==6 | CVCtype==7, by(CVCtype)
 
 ranksum logproductivity if CVCtype==1 | CVCtype==2, by(CVCtype)
 ranksum logproductivity if CVCtype==1 | CVCtype==3, by(CVCtype)
@@ -354,6 +458,12 @@ ranksum logproductivity if CVCtype==3 | CVCtype==6, by(CVCtype)
 ranksum logproductivity if CVCtype==4 | CVCtype==5, by(CVCtype)
 ranksum logproductivity if CVCtype==4 | CVCtype==6, by(CVCtype)
 ranksum logproductivity if CVCtype==5 | CVCtype==6, by(CVCtype)
+ranksum logproductivity if CVCtype==1 | CVCtype==7, by(CVCtype)
+ranksum logproductivity if CVCtype==2 | CVCtype==7, by(CVCtype)
+ranksum logproductivity if CVCtype==3 | CVCtype==7, by(CVCtype)
+ranksum logproductivity if CVCtype==4 | CVCtype==7, by(CVCtype)
+ranksum logproductivity if CVCtype==5 | CVCtype==7, by(CVCtype)
+ranksum logproductivity if CVCtype==6 | CVCtype==7, by(CVCtype)
 
 
 
