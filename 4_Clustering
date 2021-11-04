@@ -518,3 +518,19 @@ NB: Kruskal –Wallis tests that data are not from the same population.
 -> per comparare due clusters: Mann–Whitney U test? 
 https://en.wikipedia.org/wiki/Mann%E2%80%93Whitney_U_test
 
+
+*per tabulare i risultati (due variabili categoriche)
+tab clusfriendl clusorg
+tabulate clusfriendl clusorg, chi2 expected
+
+
+
+*Se ho small cell counts conviene Fisher Exact test
+tabulate clusorg clusfriendl, exact expected V
+tabulate clusorg clusfriendl , cchi2 cell chi2 exact expected V
+*(comando cchi2 mostra cell contribution to paerson's chi squared).
+
+Cramer's v ->  http://www.real-statistics.com/chi-square-and-f-distributions/effect-size-chi-square/, gives an understanding of the size of the effect. Check link for interpreting the results (df qui=2; valore medio-alto (alto sopra 0.35, medio sopra 0.21 per df=2).
+NB: The measures of effect size do not rely on the chi-square test of association in any way.  There is no statistical inference (https://www.researchgate.net/post/Which_method_is_appropriate_for_measuring_the_effect_size_after_applying_Fishers_Exact_Test).
+
+
