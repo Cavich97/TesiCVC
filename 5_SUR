@@ -1,9 +1,12 @@
 *[FOR MORE INFO: https://www.youtube.com/watch?v=7AEw1SeeSo4]
 * Seemingly Unrelated Regressions (SUR) in Stata 
 
-global y1list percipo percmaexternal
-global y2list percmainternal 
-global y3list perctechalliances perccommalliancesafterinvestment
+
+gen percexits5y = percipo5y + percacquisitionsexternal5y
+
+global y1list percexits5y
+global y2list percacquisitionsinternal5y 
+global y3list perctechalliancesafterinv5y
 
 global xlist logcvcsize latestage industrydiversification geogdiversification industryexploration syndacate distanceparent autonomy managersparent femalemanagers ethnicitydiversification logproductivity
 
@@ -37,7 +40,7 @@ reg $y3list $xlist
 * SUR model 
 sureg ($y1list $xlist) ($y2list $xlist) ($y3list $xlist), corr dfk small
 
-*Testing Coefficients of the variables to zero (in order to drop them)
+* Testing Coefficients of the variables to zero (in order to drop them)
 test [$y1list]$x_control2 =[$y2list]$x_control2 = [$y3list]$x_control2 = 0
 test [$y1list]$x_control3 =[$y2list]$x_control3 = [$y3list]$x_control3 = 0
 test [$y1list]$x_control4 =[$y2list]$x_control4 = [$y3list]$x_control4 = 0
