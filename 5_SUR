@@ -1,47 +1,59 @@
 *[FOR MORE INFO: https://www.youtube.com/watch?v=7AEw1SeeSo4]
 * Seemingly Unrelated Regressions (SUR) in Stata 
 
-global y1list scrability
-global y2list intcommeff
-global y3list deleg
-global y4list specializ
+global y1list percipo percmaexternal
+global y2list percmainternal 
+global y3list perctechalliances perccommalliancesafterinvestment
 
-global xlist friendl geocultdiver inddiver numinv percsyndfirstinv us europe lifescience
+global xlist logcvcsize latestage industrydiversification geogdiversification industryexploration syndacate distanceparent autonomy managersparent femalemanagers ethnicitydiversification logproductivity
 
+global x1 logcvcsize 
+global x2 latestage 
+global x3 industrydiversification
+global x4 geogdiversification
+global x5 industryexploration
+global x6 syndacate 
+global x7 distanceparent 
+global x8 autonomy
+global x9 managersparent
+global x10 femalemanagers
+global x11 ethnicitydiversification
+global x12 logproductivity
 
-global x1 friendl 
-global x2 geocultdiver 
-global x3 inddiver
-global x4 numinv
-global x5 percsyndfirstinv
 global x_control2 us
 global x_control3 europe
 global x_control4 lifescience
 
 
-describe $y1list $y2list $y3list $y4list $xlist 
-summarize $y1list $y2list $y3list $y4list $xlist  
+describe $y1list $y2list $y3list
+summarize $y1list $y2list $y3list
 
 * OLS regressions 
 reg $y1list $xlist 
 reg $y2list $xlist
 reg $y3list $xlist
-reg $y4list $xlist
+
 
 * SUR model 
-sureg ($y1list $xlist) ($y2list $xlist) ($y3list $xlist) ($y4list $xlist), corr dfk small
+sureg ($y1list $xlist) ($y2list $xlist) ($y3list $xlist), corr dfk small
 
 *Testing Coefficients of the variables to zero (in order to drop them)
 test [$y1list]$x_control2 =[$y2list]$x_control2 = [$y3list]$x_control2 = [$y4list]$x_control2=0
 test [$y1list]$x_control3 =[$y2list]$x_control3 = [$y3list]$x_control3 = [$y4list]$x_control3=0
 test [$y1list]$x_control4 =[$y2list]$x_control4 = [$y3list]$x_control4 = [$y4list]$x_control4=0
 
-test [$y1list]$x1 =[$y2list]$x1= [$y3list]$x1= [$y4list]$x1=0
-test [$y1list]$x2 =[$y2list]$x2= [$y3list]$x2= [$y4list]$x2=0
-test [$y1list]$x3 =[$y2list]$x3= [$y3list]$x3= [$y4list]$x3=0
-test [$y1list]$x4 =[$y2list]$x4= [$y3list]$x4= [$y4list]$x4=0
-test [$y1list]$x5=[$y2list]$x5= [$y3list]$x5= [$y4list]$x5=0
-
+test [$y1list]$x1 =[$y2list]$x1= [$y3list]$x1=0
+test [$y1list]$x2 =[$y2list]$x2= [$y3list]$x2=0
+test [$y1list]$x3 =[$y2list]$x3= [$y3list]$x3=0
+test [$y1list]$x4 =[$y2list]$x4= [$y3list]$x4=0
+test [$y1list]$x5 =[$y2list]$x5= [$y3list]$x5=0
+test [$y1list]$x6 =[$y2list]$x6= [$y3list]$x6=0
+test [$y1list]$x7 =[$y2list]$x7= [$y3list]$x7=0
+test [$y1list]$x8 =[$y2list]$x8= [$y3list]$x8=0
+test [$y1list]$x9 =[$y2list]$x9= [$y3list]$x9=0
+test [$y1list]$x10 =[$y2list]$x10= [$y3list]$x10=0
+test [$y1list]$x11 =[$y2list]$x11= [$y3list]$x11=0
+test [$y1list]$x12 =[$y2list]$x12= [$y3list]$x12=0
 
 
 [E' CORRETTO TESTARE ENTRAMBE?]
