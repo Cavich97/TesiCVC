@@ -331,6 +331,36 @@ ranksum logproductivity if CVCtype==6 | CVCtype==7, by(CVCtype)
 
 
 
+* CLUSTERING (without logsize and 6 clusters)
+
+
+cluster wardslinkage cvcsize latestage industrydiversification geogdiversification industryexploration syndacate distanceparent autonomy managersparent femalemanagers ethnicitydiversification logproductivity, measure(L2squared)
+cluster dendrogram _clus_1, cutnumber(20)
+
+* stopping rules: 
+* calinski rule --> piu grande F meglio 
+cluster stop _clus_1, rule(calinski)
+* duda-hart rule --> piu grande Je(1)/Je(2) e piu' piccolo T
+cluster stop _clus_1, rule(duda)
+
+* 1) impose WARDSLINKAGE to K-MEANS
+*generate cluster variable
+cluster generate clu1 = groups(6), name(_clus_1)
+hist clu1, addl frequency
+*K-means cluster
+cluster kmeans cvcsize latestage industrydiversification geogdiversification industryexploration syndacate distanceparent autonomy managersparent femalemanagers ethnicitydiversification logproductivity, k(6) measure(L2squared) start(group(clu1)) keepcenters
+rename _clus_2 CVCtype
+hist CVCtype, addl frequency
+
+* 2) WARDSLINKAGE (optimal number) + K-MEANS (clustering)
+cluster kmeans cvcsize latestage industrydiversification geogdiversification industryexploration syndacate distanceparent autonomy managersparent femalemanagers ethnicitydiversification logproductivity, k(6) measure(L2squared) start(krandom)
+rename _clus_2 CVCtype
+hist CVCtype, addl frequency
+
+
+
+
+
 * FUMI
 
 cluster wardslinkage cvcsize latestage industrydiversification geogdiversification industryexploration syndacate distanceparent autonomy managersparent femalemanagers ethnicitydiversification logproductivity, measure(L2squared)
