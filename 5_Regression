@@ -3,6 +3,11 @@
 
 
 gen percexits5y = percipo5y + percacquisitionsexternal5y
+gen financialperf = (percexits5y>0)
+gen strategicperf = (percacquisitionsinternal5y>0)
+gen techalliances = (perctechalliancesafterinv5y>0)
+gen commalliances = (perccommalliancesafterinv5y>0)
+
 
 global y1list percexits5y
 global y2list percacquisitionsinternal5y 
