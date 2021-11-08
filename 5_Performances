@@ -2,7 +2,7 @@
 * Seemingly Unrelated Regressions (SUR) in Stata 
 
 
-* Wilcoxon test (with percentages)
+* 1) Wilcoxon test (with percentages)
 
 gen percexits5y = percipo5y + percacquisitionsexternal5y
 
@@ -95,10 +95,10 @@ ranksum perccommalliancesafterinv5y if CVCtype==5 | CVCtype==7, by(CVCtype)
 ranksum perccommalliancesafterinv5y if CVCtype==6 | CVCtype==7, by(CVCtype)
 
 
-* Wilcoxon test (with dummies)
+* 2) Wilcoxon test (with dummies)
 
 gen financialperf = (percexits5y>0)
-gen strategicperf = (percacquisitionsinternal5y>0)
+gen internalacquisitions = (percacquisitionsinternal5y>0)
 gen techalliances = (perctechalliancesafterinv5y>0)
 gen commalliances = (perccommalliancesafterinv5y>0)
 
@@ -124,27 +124,27 @@ ranksum financialperf if CVCtype==4 | CVCtype==7, by(CVCtype)
 ranksum financialperf if CVCtype==5 | CVCtype==7, by(CVCtype)
 ranksum financialperf if CVCtype==6 | CVCtype==7, by(CVCtype)
 
-ranksum strategicperf if CVCtype==1 | CVCtype==2, by(CVCtype)
-ranksum strategicperf if CVCtype==1 | CVCtype==3, by(CVCtype)
-ranksum strategicperf if CVCtype==1 | CVCtype==4, by(CVCtype)
-ranksum strategicperf if CVCtype==1 | CVCtype==5, by(CVCtype)
-ranksum strategicperf if CVCtype==1 | CVCtype==6, by(CVCtype)
-ranksum strategicperf if CVCtype==2 | CVCtype==3, by(CVCtype)
-ranksum strategicperf if CVCtype==2 | CVCtype==4, by(CVCtype)
-ranksum strategicperf if CVCtype==2 | CVCtype==5, by(CVCtype)
-ranksum strategicperf if CVCtype==2 | CVCtype==6, by(CVCtype)
-ranksum strategicperf if CVCtype==3 | CVCtype==4, by(CVCtype)
-ranksum strategicperf if CVCtype==3 | CVCtype==5, by(CVCtype)
-ranksum strategicperf if CVCtype==3 | CVCtype==6, by(CVCtype)
-ranksum strategicperf if CVCtype==4 | CVCtype==5, by(CVCtype)
-ranksum strategicperf if CVCtype==4 | CVCtype==6, by(CVCtype)
-ranksum strategicperf if CVCtype==5 | CVCtype==6, by(CVCtype)
-ranksum strategicperf if CVCtype==1 | CVCtype==7, by(CVCtype)
-ranksum strategicperf if CVCtype==2 | CVCtype==7, by(CVCtype)
-ranksum strategicperf if CVCtype==3 | CVCtype==7, by(CVCtype)
-ranksum strategicperf if CVCtype==4 | CVCtype==7, by(CVCtype)
-ranksum strategicperf if CVCtype==5 | CVCtype==7, by(CVCtype)
-ranksum strategicperf if CVCtype==6 | CVCtype==7, by(CVCtype)
+ranksum internalacquisitions if CVCtype==1 | CVCtype==2, by(CVCtype)
+ranksum internalacquisitions if CVCtype==1 | CVCtype==3, by(CVCtype)
+ranksum internalacquisitions if CVCtype==1 | CVCtype==4, by(CVCtype)
+ranksum internalacquisitions if CVCtype==1 | CVCtype==5, by(CVCtype)
+ranksum internalacquisitions if CVCtype==1 | CVCtype==6, by(CVCtype)
+ranksum internalacquisitions if CVCtype==2 | CVCtype==3, by(CVCtype)
+ranksum internalacquisitions if CVCtype==2 | CVCtype==4, by(CVCtype)
+ranksum internalacquisitions if CVCtype==2 | CVCtype==5, by(CVCtype)
+ranksum internalacquisitions if CVCtype==2 | CVCtype==6, by(CVCtype)
+ranksum internalacquisitions if CVCtype==3 | CVCtype==4, by(CVCtype)
+ranksum internalacquisitions if CVCtype==3 | CVCtype==5, by(CVCtype)
+ranksum internalacquisitions if CVCtype==3 | CVCtype==6, by(CVCtype)
+ranksum internalacquisitions if CVCtype==4 | CVCtype==5, by(CVCtype)
+ranksum internalacquisitions if CVCtype==4 | CVCtype==6, by(CVCtype)
+ranksum internalacquisitions if CVCtype==5 | CVCtype==6, by(CVCtype)
+ranksum internalacquisitions if CVCtype==1 | CVCtype==7, by(CVCtype)
+ranksum internalacquisitions if CVCtype==2 | CVCtype==7, by(CVCtype)
+ranksum internalacquisitions if CVCtype==3 | CVCtype==7, by(CVCtype)
+ranksum internalacquisitions if CVCtype==4 | CVCtype==7, by(CVCtype)
+ranksum internalacquisitions if CVCtype==5 | CVCtype==7, by(CVCtype)
+ranksum internalacquisitions if CVCtype==6 | CVCtype==7, by(CVCtype)
 
 ranksum techalliances if CVCtype==1 | CVCtype==2, by(CVCtype)
 ranksum techalliances if CVCtype==1 | CVCtype==3, by(CVCtype)
@@ -191,15 +191,147 @@ ranksum commalliances if CVCtype==5 | CVCtype==7, by(CVCtype)
 ranksum commalliances if CVCtype==6 | CVCtype==7, by(CVCtype)
 
 
+* 3) Wilcoxon test (with 2 dummy variables)
 
-* REGRESSION
+gen strategicperf = internalacquisitions * techalliances
+
+ranksum financialperf if CVCtype==1 | CVCtype==2, by(CVCtype)
+ranksum financialperf if CVCtype==1 | CVCtype==3, by(CVCtype)
+ranksum financialperf if CVCtype==1 | CVCtype==4, by(CVCtype)
+ranksum financialperf if CVCtype==1 | CVCtype==5, by(CVCtype)
+ranksum financialperf if CVCtype==1 | CVCtype==6, by(CVCtype)
+ranksum financialperf if CVCtype==2 | CVCtype==3, by(CVCtype)
+ranksum financialperf if CVCtype==2 | CVCtype==4, by(CVCtype)
+ranksum financialperf if CVCtype==2 | CVCtype==5, by(CVCtype)
+ranksum financialperf if CVCtype==2 | CVCtype==6, by(CVCtype)
+ranksum financialperf if CVCtype==3 | CVCtype==4, by(CVCtype)
+ranksum financialperf if CVCtype==3 | CVCtype==5, by(CVCtype)
+ranksum financialperf if CVCtype==3 | CVCtype==6, by(CVCtype)
+ranksum financialperf if CVCtype==4 | CVCtype==5, by(CVCtype)
+ranksum financialperf if CVCtype==4 | CVCtype==6, by(CVCtype)
+ranksum financialperf if CVCtype==5 | CVCtype==6, by(CVCtype)
+ranksum financialperf if CVCtype==1 | CVCtype==7, by(CVCtype)
+ranksum financialperf if CVCtype==2 | CVCtype==7, by(CVCtype)
+ranksum financialperf if CVCtype==3 | CVCtype==7, by(CVCtype)
+ranksum financialperf if CVCtype==4 | CVCtype==7, by(CVCtype)
+ranksum financialperf if CVCtype==5 | CVCtype==7, by(CVCtype)
+ranksum financialperf if CVCtype==6 | CVCtype==7, by(CVCtype)
+
+ranksum strategicperf if CVCtype==1 | CVCtype==2, by(CVCtype)
+ranksum strategicperf if CVCtype==1 | CVCtype==3, by(CVCtype)
+ranksum strategicperf if CVCtype==1 | CVCtype==4, by(CVCtype)
+ranksum strategicperf if CVCtype==1 | CVCtype==5, by(CVCtype)
+ranksum strategicperf if CVCtype==1 | CVCtype==6, by(CVCtype)
+ranksum strategicperf if CVCtype==2 | CVCtype==3, by(CVCtype)
+ranksum strategicperf if CVCtype==2 | CVCtype==4, by(CVCtype)
+ranksum strategicperf if CVCtype==2 | CVCtype==5, by(CVCtype)
+ranksum strategicperf if CVCtype==2 | CVCtype==6, by(CVCtype)
+ranksum strategicperf if CVCtype==3 | CVCtype==4, by(CVCtype)
+ranksum strategicperf if CVCtype==3 | CVCtype==5, by(CVCtype)
+ranksum strategicperf if CVCtype==3 | CVCtype==6, by(CVCtype)
+ranksum strategicperf if CVCtype==4 | CVCtype==5, by(CVCtype)
+ranksum strategicperf if CVCtype==4 | CVCtype==6, by(CVCtype)
+ranksum strategicperf if CVCtype==5 | CVCtype==6, by(CVCtype)
+ranksum strategicperf if CVCtype==1 | CVCtype==7, by(CVCtype)
+ranksum strategicperf if CVCtype==2 | CVCtype==7, by(CVCtype)
+ranksum strategicperf if CVCtype==3 | CVCtype==7, by(CVCtype)
+ranksum strategicperf if CVCtype==4 | CVCtype==7, by(CVCtype)
+ranksum strategicperf if CVCtype==5 | CVCtype==7, by(CVCtype)
+ranksum strategicperf if CVCtype==6 | CVCtype==7, by(CVCtype)
+
+
+
+* REGRESSION FROM CLUSTERS DUMMIES
+
+gen cluster1 = (CVCtype==1)
+gen cluster2 = (CVCtype==2)
+gen cluster3 = (CVCtype==3)
+gen cluster4 = (CVCtype==4)
+gen cluster5 = (CVCtype==5)
+gen cluster6 = (CVCtype==6)
+gen cluster7 = (CVCtype==7)
+
+global y1list financialperf
+global y2list strategicperf 
+
+global xlist cluster1 cluster2 cluster3 cluster4 cluster5 cluster6 cluster7
+global x1 cluster1 
+global x2 cluster2 
+global x3 cluster3
+global x4 cluster4
+global x5 cluster5
+global x6 cluster6 
+global x7 cluster7 
+
+*global x_control2 us
+*global x_control3 europe
+*global x_control4 lifescience
+
+describe $y1list $y2list
+summarize $y1list $y2list
+
+* OLS regressions 
+reg $y1list $xlist 
+reg $y2list $xlist
+
+* SUR model 
+sureg ($y1list $xlist) ($y2list $xlist), corr dfk small
+
+* Testing Coefficients of the variables to zero (in order to drop them)
+test [$y1list]$x_control2 =[$y2list]$x_control2 = [$y3list]$x_control2 = 0
+test [$y1list]$x_control3 =[$y2list]$x_control3 = [$y3list]$x_control3 = 0
+test [$y1list]$x_control4 =[$y2list]$x_control4 = [$y3list]$x_control4 = 0
+
+test [$y1list]$x1 =[$y2list]$x1= [$y3list]$x1=0
+test [$y1list]$x2 =[$y2list]$x2= [$y3list]$x2=0
+test [$y1list]$x3 =[$y2list]$x3= [$y3list]$x3=0
+test [$y1list]$x4 =[$y2list]$x4= [$y3list]$x4=0
+test [$y1list]$x5 =[$y2list]$x5= [$y3list]$x5=0
+test [$y1list]$x6 =[$y2list]$x6= [$y3list]$x6=0
+test [$y1list]$x7 =[$y2list]$x7= [$y3list]$x7=0
+test [$y1list]$x8 =[$y2list]$x8= [$y3list]$x8=0
+test [$y1list]$x9 =[$y2list]$x9= [$y3list]$x9=0
+test [$y1list]$x10 =[$y2list]$x10= [$y3list]$x10=0
+test [$y1list]$x11 =[$y2list]$x11= [$y3list]$x11=0
+test [$y1list]$x12 =[$y2list]$x12= [$y3list]$x12=0
+
+
+[E' CORRETTO TESTARE ENTRAMBE?]
+
+
+* Testing of cross-equation constraints 
+asdoc test ([$y1list]$x1 =[$y2list]$x1) ([$y1list]$x1 =[$y3list]$x1) ([$y2list]$x1 = [$y3list]$x1), mtest(bonferroni)
+asdoc test ([$y1list]$x2 =[$y2list]$x2) ([$y1list]$x2 =[$y3list]$x2) ([$y2list]$x2 = [$y3list]$x2), mtest(bonferroni)
+asdoc test ([$y1list]$x3 =[$y2list]$x3) ([$y1list]$x3 =[$y3list]$x3) ([$y2list]$x3 = [$y3list]$x3), mtest(bonferroni)
+asdoc test ([$y1list]$x4 =[$y2list]$x4) ([$y1list]$x4 =[$y3list]$x4) ([$y2list]$x4 = [$y3list]$x4), mtest(bonferroni)
+asdoc test ([$y1list]$x5 =[$y2list]$x5) ([$y1list]$x5 =[$y3list]$x5) ([$y2list]$x5 = [$y3list]$x5), mtest(bonferroni)
+asdoc test ([$y1list]$x6 =[$y2list]$x6) ([$y1list]$x6 =[$y3list]$x6) ([$y2list]$x6 = [$y3list]$x6), mtest(bonferroni)
+asdoc test ([$y1list]$x7 =[$y2list]$x7) ([$y1list]$x7 =[$y3list]$x7) ([$y2list]$x7 = [$y3list]$x7), mtest(bonferroni)
+asdoc test ([$y1list]$x8 =[$y2list]$x8) ([$y1list]$x8 =[$y3list]$x8) ([$y2list]$x8 = [$y3list]$x8), mtest(bonferroni)
+asdoc test ([$y1list]$x9 =[$y2list]$x9) ([$y1list]$x9 =[$y3list]$x9) ([$y2list]$x9 = [$y3list]$x9), mtest(bonferroni)
+asdoc test ([$y1list]$x10 =[$y2list]$x10) ([$y1list]$x10 =[$y3list]$x10) ([$y2list]$x10 = [$y3list]$x10), mtest(bonferroni)
+asdoc test ([$y1list]$x11 =[$y2list]$x11) ([$y1list]$x11 =[$y3list]$x11) ([$y2list]$x11 = [$y3list]$x11), mtest(bonferroni)
+asdoc test ([$y1list]$x12 =[$y2list]$x12) ([$y1list]$x12 =[$y3list]$x12) ([$y2list]$x12 = [$y3list]$x12), mtest(bonferroni)
+
+asdoc test ([$y1list]$x_control2 =[$y2list]$x_control2) ([$y1list]$x_control2 =[$y3list]$x_control2) ([$y2list]$x_control2 = [$y3list]$x_control2), mtest(bonferroni)
+asdoc test ([$y1list]$x_control3 =[$y2list]$x_control3) ([$y1list]$x_control3 =[$y3list]$x_control3) ([$y2list]$x_control3 = [$y3list]$x_control3), mtest(bonferroni)
+asdoc test ([$y1list]$x_control4 =[$y2list]$x_control4) ([$y1list]$x_control4 =[$y3list]$x_control4) ([$y2list]$x_control4 = [$y3list]$x_control4), mtest(bonferroni)
+
+
+* SUR model with cross-equation constraint [this part depends on the test above]
+constraint 1 [$y1list]$x1 = [$y2list]$x1 
+sureg ($y1list $x1list)($y2list $x2list), constraints(1) 
+
+
+
+
+* REGRESSION FROM ORG.STRUCTURE INV.STRATEGY
 
 global y1list percexits5y
 global y2list percacquisitionsinternal5y 
 global y3list perctechalliancesafterinv5y
 
 global xlist logcvcsize latestage industrydiversification geogdiversification industryexploration syndacate distanceparent autonomy managersparent femalemanagers ethnicitydiversification logproductivity
-
 global x1 logcvcsize 
 global x2 latestage 
 global x3 industrydiversification
