@@ -243,11 +243,10 @@ ranksum strategicperf if CVCtype==6 | CVCtype==7, by(CVCtype)
 
 * REGRESSION FROM CLUSTERS DUMMIES
 
-global y1list financialperf
-global y2list strategicperf 
+global y1list percexits5y
+global y2list percstrategic 
 
-global xlist cluster1 cluster2 cluster3 cluster4 cluster5 cluster6 cluster7
-global x1 cluster1 
+global xlist cluster2 cluster3 cluster4 cluster5 cluster6 cluster7 us europe lifescience mediatelco hightech
 global x2 cluster2 
 global x3 cluster3
 global x4 cluster4
@@ -255,9 +254,11 @@ global x5 cluster5
 global x6 cluster6 
 global x7 cluster7 
 
-*global x_control2 us
-*global x_control3 europe
-*global x_control4 lifescience
+global x_control2 us
+global x_control3 europe
+global x_control4 lifescience
+global x_control5 mediatelco
+global x_control6 hightech
 
 describe $y1list $y2list
 summarize $y1list $y2list
@@ -270,24 +271,60 @@ reg $y2list $xlist
 sureg ($y1list $xlist) ($y2list $xlist), corr dfk small
 
 
+* Testing difference among coefficients of the sae regression (financial or strategic)
+test [$y1list]$x2 =[$y1list]$x3 =0
+test [$y1list]$x2 =[$y1list]$x4 =0
+test [$y1list]$x2 =[$y1list]$x5 =0
+test [$y1list]$x2 =[$y1list]$x6 =0
+test [$y1list]$x2 =[$y1list]$x7 =0
+test [$y1list]$x3 =[$y1list]$x4 =0
+test [$y1list]$x3 =[$y1list]$x5 =0
+test [$y1list]$x3 =[$y1list]$x6 =0
+test [$y1list]$x3 =[$y1list]$x7 =0
+test [$y1list]$x4 =[$y1list]$x5 =0
+test [$y1list]$x4 =[$y1list]$x6 =0
+test [$y1list]$x4 =[$y1list]$x7 =0
+test [$y1list]$x5 =[$y1list]$x6 =0
+test [$y1list]$x5 =[$y1list]$x7 =0
+test [$y1list]$x6 =[$y1list]$x7 =0
+test [$y2list]$x2 =[$y2list]$x3 =0
+test [$y2list]$x2 =[$y2list]$x4 =0
+test [$y2list]$x2 =[$y2list]$x5 =0
+test [$y2list]$x2 =[$y2list]$x6 =0
+test [$y2list]$x2 =[$y2list]$x7 =0
+test [$y2list]$x3 =[$y2list]$x4 =0
+test [$y2list]$x3 =[$y2list]$x5 =0
+test [$y2list]$x3 =[$y2list]$x6 =0
+test [$y2list]$x3 =[$y2list]$x7 =0
+test [$y2list]$x4 =[$y2list]$x5 =0
+test [$y2list]$x4 =[$y2list]$x6 =0
+test [$y2list]$x4 =[$y2list]$x7 =0
+test [$y2list]$x5 =[$y2list]$x6 =0
+test [$y2list]$x5 =[$y2list]$x7 =0
+test [$y2list]$x6 =[$y2list]$x7 =0
+test [$y1list]$x_control2 =[$y1list]$x_control3 =0
+test [$y1list]$x_control4 =[$y1list]$x_control5 =0
+test [$y1list]$x_control4 =[$y1list]$x_control6 =0
+test [$y1list]$x_control5 =[$y1list]$x_control6 =0
+test [$y2list]$x_control2 =[$y2list]$x_control3 =0
+test [$y2list]$x_control4 =[$y2list]$x_control5 =0
+test [$y2list]$x_control4 =[$y2list]$x_control6 =0
+test [$y2list]$x_control5 =[$y2list]$x_control6 =0
+
 * Testing coefficients of the variables to zero (in order to drop them)
-test [$y1list]$x1 =[$y2list]$x1 =0
 test [$y1list]$x2 =[$y2list]$x2 =0
 test [$y1list]$x3 =[$y2list]$x3 =0
 test [$y1list]$x4 =[$y2list]$x4 =0
 test [$y1list]$x5 =[$y2list]$x5 =0
 test [$y1list]$x6 =[$y2list]$x6 =0
 test [$y1list]$x7 =[$y2list]$x7 =0
-
 * Testing of cross-equation constraints 
-asdoc test ([$y1list]$x1 =[$y2list]$x1), mtest(bonferroni)
 asdoc test ([$y1list]$x2 =[$y2list]$x2), mtest(bonferroni)
 asdoc test ([$y1list]$x3 =[$y2list]$x3), mtest(bonferroni)
 asdoc test ([$y1list]$x4 =[$y2list]$x4), mtest(bonferroni)
 asdoc test ([$y1list]$x5 =[$y2list]$x5), mtest(bonferroni)
 asdoc test ([$y1list]$x6 =[$y2list]$x6), mtest(bonferroni)
 asdoc test ([$y1list]$x7 =[$y2list]$x7), mtest(bonferroni)
-
 * Testing control variables
 test [$y1list]$x_control2 =[$y2list]$x_control2 = 0
 test [$y1list]$x_control3 =[$y2list]$x_control3 = 0
@@ -295,13 +332,9 @@ test [$y1list]$x_control4 =[$y2list]$x_control4 = 0
 asdoc test ([$y1list]$x_control2 =[$y2list]$x_control2), mtest(bonferroni)
 asdoc test ([$y1list]$x_control3 =[$y2list]$x_control3), mtest(bonferroni)
 asdoc test ([$y1list]$x_control4 =[$y2list]$x_control4), mtest(bonferroni)
-
-
 * SUR model with cross-equation constraint [this part depends on the test above]
-constraint 1 [$y1list]$x2 = [$y2list]$x2
-constraint 2 [$y1list]$x4 = [$y2list]$x4
-
-sureg ($y1list $x1list)($y2list $x2list), constraints(2) 
+constraint 1 [$y1list]$x3 = [$y2list]$x3
+sureg ($y1list $x1list)($y2list $x2list), constraints(1) 
 
 
 
@@ -310,8 +343,7 @@ sureg ($y1list $x1list)($y2list $x2list), constraints(2)
 * REGRESSION FROM ORG.STRUCTURE INV.STRATEGY
 
 global y1list percexits5y
-global y2list percacquisitionsinternal5y 
-global y3list perctechalliancesafterinv5y
+global y2list percstrategic 
 
 global xlist logcvcsize latestage industrydiversification geogdiversification industryexploration syndacate distanceparent autonomy managersparent femalemanagers ethnicitydiversification logproductivity
 global x1 logcvcsize 
@@ -330,6 +362,8 @@ global x12 logproductivity
 global x_control2 us
 global x_control3 europe
 global x_control4 lifescience
+global x_control5 mediatelco
+global x_control6 hightech
 
 
 describe $y1list $y2list $y3list
@@ -343,6 +377,177 @@ reg $y3list $xlist
 
 * SUR model 
 sureg ($y1list $xlist) ($y2list $xlist) ($y3list $xlist), corr dfk small
+
+* Testing difference among coefficients of the sae regression (financial or strategic)
+test [$y1list]$x1 =[$y1list]$x2 =0
+test [$y1list]$x1 =[$y1list]$x3 =0
+test [$y1list]$x1 =[$y1list]$x4 =0
+test [$y1list]$x1 =[$y1list]$x5 =0
+test [$y1list]$x1 =[$y1list]$x6 =0
+test [$y1list]$x1 =[$y1list]$x7 =0
+test [$y1list]$x1 =[$y1list]$x8 =0
+test [$y1list]$x1 =[$y1list]$x9 =0
+test [$y1list]$x1 =[$y1list]$x10 =0
+test [$y1list]$x1 =[$y1list]$x11 =0
+test [$y1list]$x1 =[$y1list]$x12 =0
+test [$y1list]$x2 =[$y1list]$x3 =0
+test [$y1list]$x2 =[$y1list]$x4 =0
+test [$y1list]$x2 =[$y1list]$x5 =0
+test [$y1list]$x2 =[$y1list]$x6 =0
+test [$y1list]$x2 =[$y1list]$x7 =0
+test [$y1list]$x2 =[$y1list]$x8 =0
+test [$y1list]$x2 =[$y1list]$x9 =0
+test [$y1list]$x2 =[$y1list]$x10 =0
+test [$y1list]$x2 =[$y1list]$x11 =0
+test [$y1list]$x2 =[$y1list]$x12 =0
+test [$y1list]$x3 =[$y1list]$x4 =0
+test [$y1list]$x3 =[$y1list]$x5 =0
+test [$y1list]$x3 =[$y1list]$x6 =0
+test [$y1list]$x3 =[$y1list]$x7 =0
+test [$y1list]$x3 =[$y1list]$x8 =0
+test [$y1list]$x3 =[$y1list]$x9 =0
+test [$y1list]$x3 =[$y1list]$x10 =0
+test [$y1list]$x3 =[$y1list]$x11 =0
+test [$y1list]$x3 =[$y1list]$x12 =0
+test [$y1list]$x4 =[$y1list]$x5 =0
+test [$y1list]$x4 =[$y1list]$x6 =0
+test [$y1list]$x4 =[$y1list]$x7 =0
+test [$y1list]$x4 =[$y1list]$x8 =0
+test [$y1list]$x4 =[$y1list]$x9 =0
+test [$y1list]$x4 =[$y1list]$x10 =0
+test [$y1list]$x4 =[$y1list]$x11 =0
+test [$y1list]$x4 =[$y1list]$x12 =0
+test [$y1list]$x5 =[$y1list]$x6 =0
+test [$y1list]$x5 =[$y1list]$x7 =0
+test [$y1list]$x5 =[$y1list]$x8 =0
+test [$y1list]$x5 =[$y1list]$x9 =0
+test [$y1list]$x5 =[$y1list]$x10 =0
+test [$y1list]$x5 =[$y1list]$x11 =0
+test [$y1list]$x5 =[$y1list]$x12 =0
+test [$y1list]$x6 =[$y1list]$x7 =0
+test [$y1list]$x6 =[$y1list]$x8 =0
+test [$y1list]$x6 =[$y1list]$x9 =0
+test [$y1list]$x6 =[$y1list]$x10 =0
+test [$y1list]$x6 =[$y1list]$x11 =0
+test [$y1list]$x6 =[$y1list]$x12 =0
+test [$y1list]$x7 =[$y1list]$x8 =0
+test [$y1list]$x7 =[$y1list]$x9 =0
+test [$y1list]$x7 =[$y1list]$x10 =0
+test [$y1list]$x7 =[$y1list]$x11 =0
+test [$y1list]$x7 =[$y1list]$x12 =0
+test [$y1list]$x8 =[$y1list]$x9 =0
+test [$y1list]$x8 =[$y1list]$x10 =0
+test [$y1list]$x8 =[$y1list]$x11 =0
+test [$y1list]$x8 =[$y1list]$x12 =0
+test [$y1list]$x9 =[$y1list]$x10 =0
+test [$y1list]$x9 =[$y1list]$x11 =0
+test [$y1list]$x9 =[$y1list]$x12 =0
+test [$y1list]$x10 =[$y1list]$x11 =0
+test [$y1list]$x10 =[$y1list]$x12 =0
+test [$y1list]$x11 =[$y1list]$x12 =0
+test [$y2list]$x1 =[$y2list]$x2 =0
+test [$y2list]$x1 =[$y2list]$x3 =0
+test [$y2list]$x1 =[$y2list]$x4 =0
+test [$y2list]$x1 =[$y2list]$x5 =0
+test [$y2list]$x1 =[$y2list]$x6 =0
+test [$y2list]$x1 =[$y2list]$x7 =0
+test [$y2list]$x1 =[$y2list]$x8 =0
+test [$y2list]$x1 =[$y2list]$x9 =0
+test [$y2list]$x1 =[$y2list]$x10 =0
+test [$y2list]$x1 =[$y2list]$x11 =0
+test [$y2list]$x1 =[$y2list]$x12 =0
+test [$y2list]$x2 =[$y2list]$x3 =0
+test [$y2list]$x2 =[$y2list]$x4 =0
+test [$y2list]$x2 =[$y2list]$x5 =0
+test [$y2list]$x2 =[$y2list]$x6 =0
+test [$y2list]$x2 =[$y2list]$x7 =0
+test [$y2list]$x2 =[$y2list]$x8 =0
+test [$y2list]$x2 =[$y2list]$x9 =0
+test [$y2list]$x2 =[$y2list]$x10 =0
+test [$y2list]$x2 =[$y2list]$x11 =0
+test [$y2list]$x2 =[$y2list]$x12 =0
+test [$y2list]$x3 =[$y2list]$x4 =0
+test [$y2list]$x3 =[$y2list]$x5 =0
+test [$y2list]$x3 =[$y2list]$x6 =0
+test [$y2list]$x3 =[$y2list]$x7 =0
+test [$y2list]$x3 =[$y2list]$x8 =0
+test [$y2list]$x3 =[$y2list]$x9 =0
+test [$y2list]$x3 =[$y2list]$x10 =0
+test [$y2list]$x3 =[$y2list]$x11 =0
+test [$y2list]$x3 =[$y2list]$x12 =0
+test [$y2list]$x4 =[$y2list]$x5 =0
+test [$y2list]$x4 =[$y2list]$x6 =0
+test [$y2list]$x4 =[$y2list]$x7 =0
+test [$y2list]$x4 =[$y2list]$x8 =0
+test [$y2list]$x4 =[$y2list]$x9 =0
+test [$y2list]$x4 =[$y2list]$x10 =0
+test [$y2list]$x4 =[$y2list]$x11 =0
+test [$y2list]$x4 =[$y2list]$x12 =0
+test [$y2list]$x5 =[$y2list]$x6 =0
+test [$y2list]$x5 =[$y2list]$x7 =0
+test [$y2list]$x5 =[$y2list]$x8 =0
+test [$y2list]$x5 =[$y2list]$x9 =0
+test [$y2list]$x5 =[$y2list]$x10 =0
+test [$y2list]$x5 =[$y2list]$x11 =0
+test [$y2list]$x5 =[$y2list]$x12 =0
+test [$y2list]$x6 =[$y2list]$x7 =0
+test [$y2list]$x6 =[$y2list]$x8 =0
+test [$y2list]$x6 =[$y2list]$x9 =0
+test [$y2list]$x6 =[$y2list]$x10 =0
+test [$y2list]$x6 =[$y2list]$x11 =0
+test [$y2list]$x6 =[$y2list]$x12 =0
+test [$y2list]$x7 =[$y2list]$x8 =0
+test [$y2list]$x7 =[$y2list]$x9 =0
+test [$y2list]$x7 =[$y2list]$x10 =0
+test [$y2list]$x7 =[$y2list]$x11 =0
+test [$y2list]$x7 =[$y2list]$x12 =0
+test [$y2list]$x8 =[$y2list]$x9 =0
+test [$y2list]$x8 =[$y2list]$x10 =0
+test [$y2list]$x8 =[$y2list]$x11 =0
+test [$y2list]$x8 =[$y2list]$x12 =0
+test [$y2list]$x9 =[$y2list]$x10 =0
+test [$y2list]$x9 =[$y2list]$x11 =0
+test [$y2list]$x9 =[$y2list]$x12 =0
+test [$y2list]$x10 =[$y2list]$x11 =0
+test [$y2list]$x10 =[$y2list]$x12 =0
+test [$y2list]$x11 =[$y2list]$x12 =0
+
+test [$y1list]$x_control2 =[$y1list]$x_control3 =0
+test [$y1list]$x_control4 =[$y1list]$x_control5 =0
+test [$y1list]$x_control4 =[$y1list]$x_control6 =0
+test [$y1list]$x_control5 =[$y1list]$x_control6 =0
+test [$y2list]$x_control2 =[$y2list]$x_control3 =0
+test [$y2list]$x_control4 =[$y2list]$x_control5 =0
+test [$y2list]$x_control4 =[$y2list]$x_control6 =0
+test [$y2list]$x_control5 =[$y2list]$x_control6 =0
+
+
+* Testing coefficients of the variables to zero (in order to drop them)
+test [$y1list]$x2 =[$y2list]$x2 =0
+test [$y1list]$x3 =[$y2list]$x3 =0
+test [$y1list]$x4 =[$y2list]$x4 =0
+test [$y1list]$x5 =[$y2list]$x5 =0
+test [$y1list]$x6 =[$y2list]$x6 =0
+test [$y1list]$x7 =[$y2list]$x7 =0
+* Testing of cross-equation constraints 
+asdoc test ([$y1list]$x2 =[$y2list]$x2), mtest(bonferroni)
+asdoc test ([$y1list]$x3 =[$y2list]$x3), mtest(bonferroni)
+asdoc test ([$y1list]$x4 =[$y2list]$x4), mtest(bonferroni)
+asdoc test ([$y1list]$x5 =[$y2list]$x5), mtest(bonferroni)
+asdoc test ([$y1list]$x6 =[$y2list]$x6), mtest(bonferroni)
+asdoc test ([$y1list]$x7 =[$y2list]$x7), mtest(bonferroni)
+* Testing control variables
+test [$y1list]$x_control2 =[$y2list]$x_control2 = 0
+test [$y1list]$x_control3 =[$y2list]$x_control3 = 0
+test [$y1list]$x_control4 =[$y2list]$x_control4 = 0
+asdoc test ([$y1list]$x_control2 =[$y2list]$x_control2), mtest(bonferroni)
+asdoc test ([$y1list]$x_control3 =[$y2list]$x_control3), mtest(bonferroni)
+asdoc test ([$y1list]$x_control4 =[$y2list]$x_control4), mtest(bonferroni)
+* SUR model with cross-equation constraint [this part depends on the test above]
+constraint 1 [$y1list]$x3 = [$y2list]$x3
+sureg ($y1list $x1list)($y2list $x2list), constraints(1) 
+
+
 
 * Testing Coefficients of the variables to zero (in order to drop them)
 test [$y1list]$x_control2 =[$y2list]$x_control2 = [$y3list]$x_control2 = 0
