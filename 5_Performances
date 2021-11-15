@@ -5,6 +5,7 @@
 * 1) Wilcoxon test (with percentages)
 
 gen percexits5y = percipo5y + percacquisitionsexternal5y
+gen percstrategic5y = percacquisitionsinternal5y + perctechalliancesafterinv5y + perccommalliancesafterinv5y
 
 ranksum percexits5y if CVCtype==1 | CVCtype==2, by(CVCtype)
 ranksum percexits5y if CVCtype==1 | CVCtype==3, by(CVCtype)
@@ -27,6 +28,28 @@ ranksum percexits5y if CVCtype==3 | CVCtype==7, by(CVCtype)
 ranksum percexits5y if CVCtype==4 | CVCtype==7, by(CVCtype)
 ranksum percexits5y if CVCtype==5 | CVCtype==7, by(CVCtype)
 ranksum percexits5y if CVCtype==6 | CVCtype==7, by(CVCtype)
+
+ranksum percstrategic5y if CVCtype==1 | CVCtype==2, by(CVCtype)
+ranksum percstrategic5y if CVCtype==1 | CVCtype==3, by(CVCtype)
+ranksum percstrategic5y if CVCtype==1 | CVCtype==4, by(CVCtype)
+ranksum percstrategic5y if CVCtype==1 | CVCtype==5, by(CVCtype)
+ranksum percstrategic5y if CVCtype==1 | CVCtype==6, by(CVCtype)
+ranksum percstrategic5y if CVCtype==2 | CVCtype==3, by(CVCtype)
+ranksum percstrategic5y if CVCtype==2 | CVCtype==4, by(CVCtype)
+ranksum percstrategic5y if CVCtype==2 | CVCtype==5, by(CVCtype)
+ranksum percstrategic5y if CVCtype==2 | CVCtype==6, by(CVCtype)
+ranksum percstrategic5y if CVCtype==3 | CVCtype==4, by(CVCtype)
+ranksum percstrategic5y if CVCtype==3 | CVCtype==5, by(CVCtype)
+ranksum percstrategic5y if CVCtype==3 | CVCtype==6, by(CVCtype)
+ranksum percstrategic5y if CVCtype==4 | CVCtype==5, by(CVCtype)
+ranksum percstrategic5y if CVCtype==4 | CVCtype==6, by(CVCtype)
+ranksum percstrategic5y if CVCtype==5 | CVCtype==6, by(CVCtype)
+ranksum percstrategic5y if CVCtype==1 | CVCtype==7, by(CVCtype)
+ranksum percstrategic5y if CVCtype==2 | CVCtype==7, by(CVCtype)
+ranksum percstrategic5y if CVCtype==3 | CVCtype==7, by(CVCtype)
+ranksum percstrategic5y if CVCtype==4 | CVCtype==7, by(CVCtype)
+ranksum percstrategic5y if CVCtype==5 | CVCtype==7, by(CVCtype)
+ranksum percstrategic5y if CVCtype==6 | CVCtype==7, by(CVCtype)
 
 ranksum percacquisitionsinternal5y if CVCtype==1 | CVCtype==2, by(CVCtype)
 ranksum percacquisitionsinternal5y if CVCtype==1 | CVCtype==3, by(CVCtype)
@@ -101,6 +124,7 @@ gen financialperf = (percexits5y>0)
 gen internalacquisitions = (percacquisitionsinternal5y>0)
 gen techalliances = (perctechalliancesafterinv5y>0)
 gen commalliances = (perccommalliancesafterinv5y>0)
+gen strategicperf = max(internalacquisitions, techalliances, commalliances)
 
 ranksum financialperf if CVCtype==1 | CVCtype==2, by(CVCtype)
 ranksum financialperf if CVCtype==1 | CVCtype==3, by(CVCtype)
@@ -123,6 +147,28 @@ ranksum financialperf if CVCtype==3 | CVCtype==7, by(CVCtype)
 ranksum financialperf if CVCtype==4 | CVCtype==7, by(CVCtype)
 ranksum financialperf if CVCtype==5 | CVCtype==7, by(CVCtype)
 ranksum financialperf if CVCtype==6 | CVCtype==7, by(CVCtype)
+
+ranksum strategicperf if CVCtype==1 | CVCtype==2, by(CVCtype)
+ranksum strategicperf if CVCtype==1 | CVCtype==3, by(CVCtype)
+ranksum strategicperf if CVCtype==1 | CVCtype==4, by(CVCtype)
+ranksum strategicperf if CVCtype==1 | CVCtype==5, by(CVCtype)
+ranksum strategicperf if CVCtype==1 | CVCtype==6, by(CVCtype)
+ranksum strategicperf if CVCtype==2 | CVCtype==3, by(CVCtype)
+ranksum strategicperf if CVCtype==2 | CVCtype==4, by(CVCtype)
+ranksum strategicperf if CVCtype==2 | CVCtype==5, by(CVCtype)
+ranksum strategicperf if CVCtype==2 | CVCtype==6, by(CVCtype)
+ranksum strategicperf if CVCtype==3 | CVCtype==4, by(CVCtype)
+ranksum strategicperf if CVCtype==3 | CVCtype==5, by(CVCtype)
+ranksum strategicperf if CVCtype==3 | CVCtype==6, by(CVCtype)
+ranksum strategicperf if CVCtype==4 | CVCtype==5, by(CVCtype)
+ranksum strategicperf if CVCtype==4 | CVCtype==6, by(CVCtype)
+ranksum strategicperf if CVCtype==5 | CVCtype==6, by(CVCtype)
+ranksum strategicperf if CVCtype==1 | CVCtype==7, by(CVCtype)
+ranksum strategicperf if CVCtype==2 | CVCtype==7, by(CVCtype)
+ranksum strategicperf if CVCtype==3 | CVCtype==7, by(CVCtype)
+ranksum strategicperf if CVCtype==4 | CVCtype==7, by(CVCtype)
+ranksum strategicperf if CVCtype==5 | CVCtype==7, by(CVCtype)
+ranksum strategicperf if CVCtype==6 | CVCtype==7, by(CVCtype)
 
 ranksum internalacquisitions if CVCtype==1 | CVCtype==2, by(CVCtype)
 ranksum internalacquisitions if CVCtype==1 | CVCtype==3, by(CVCtype)
@@ -191,87 +237,46 @@ ranksum commalliances if CVCtype==5 | CVCtype==7, by(CVCtype)
 ranksum commalliances if CVCtype==6 | CVCtype==7, by(CVCtype)
 
 
-* 3) Wilcoxon test (with 2 dummy variables)
-
-gen strategicperf = max(internalacquisitions, techalliances)
-
-ranksum financialperf if CVCtype==1 | CVCtype==2, by(CVCtype)
-ranksum financialperf if CVCtype==1 | CVCtype==3, by(CVCtype)
-ranksum financialperf if CVCtype==1 | CVCtype==4, by(CVCtype)
-ranksum financialperf if CVCtype==1 | CVCtype==5, by(CVCtype)
-ranksum financialperf if CVCtype==1 | CVCtype==6, by(CVCtype)
-ranksum financialperf if CVCtype==2 | CVCtype==3, by(CVCtype)
-ranksum financialperf if CVCtype==2 | CVCtype==4, by(CVCtype)
-ranksum financialperf if CVCtype==2 | CVCtype==5, by(CVCtype)
-ranksum financialperf if CVCtype==2 | CVCtype==6, by(CVCtype)
-ranksum financialperf if CVCtype==3 | CVCtype==4, by(CVCtype)
-ranksum financialperf if CVCtype==3 | CVCtype==5, by(CVCtype)
-ranksum financialperf if CVCtype==3 | CVCtype==6, by(CVCtype)
-ranksum financialperf if CVCtype==4 | CVCtype==5, by(CVCtype)
-ranksum financialperf if CVCtype==4 | CVCtype==6, by(CVCtype)
-ranksum financialperf if CVCtype==5 | CVCtype==6, by(CVCtype)
-ranksum financialperf if CVCtype==1 | CVCtype==7, by(CVCtype)
-ranksum financialperf if CVCtype==2 | CVCtype==7, by(CVCtype)
-ranksum financialperf if CVCtype==3 | CVCtype==7, by(CVCtype)
-ranksum financialperf if CVCtype==4 | CVCtype==7, by(CVCtype)
-ranksum financialperf if CVCtype==5 | CVCtype==7, by(CVCtype)
-ranksum financialperf if CVCtype==6 | CVCtype==7, by(CVCtype)
-
-ranksum strategicperf if CVCtype==1 | CVCtype==2, by(CVCtype)
-ranksum strategicperf if CVCtype==1 | CVCtype==3, by(CVCtype)
-ranksum strategicperf if CVCtype==1 | CVCtype==4, by(CVCtype)
-ranksum strategicperf if CVCtype==1 | CVCtype==5, by(CVCtype)
-ranksum strategicperf if CVCtype==1 | CVCtype==6, by(CVCtype)
-ranksum strategicperf if CVCtype==2 | CVCtype==3, by(CVCtype)
-ranksum strategicperf if CVCtype==2 | CVCtype==4, by(CVCtype)
-ranksum strategicperf if CVCtype==2 | CVCtype==5, by(CVCtype)
-ranksum strategicperf if CVCtype==2 | CVCtype==6, by(CVCtype)
-ranksum strategicperf if CVCtype==3 | CVCtype==4, by(CVCtype)
-ranksum strategicperf if CVCtype==3 | CVCtype==5, by(CVCtype)
-ranksum strategicperf if CVCtype==3 | CVCtype==6, by(CVCtype)
-ranksum strategicperf if CVCtype==4 | CVCtype==5, by(CVCtype)
-ranksum strategicperf if CVCtype==4 | CVCtype==6, by(CVCtype)
-ranksum strategicperf if CVCtype==5 | CVCtype==6, by(CVCtype)
-ranksum strategicperf if CVCtype==1 | CVCtype==7, by(CVCtype)
-ranksum strategicperf if CVCtype==2 | CVCtype==7, by(CVCtype)
-ranksum strategicperf if CVCtype==3 | CVCtype==7, by(CVCtype)
-ranksum strategicperf if CVCtype==4 | CVCtype==7, by(CVCtype)
-ranksum strategicperf if CVCtype==5 | CVCtype==7, by(CVCtype)
-ranksum strategicperf if CVCtype==6 | CVCtype==7, by(CVCtype)
-
-
 
 * REGRESSION FROM CLUSTERS DUMMIES
 
 global y1list percexits5y
-global y2list percstrategic 
+global y2list percstrategic5y 
 
-global xlist cluster2 cluster3 cluster4 cluster5 cluster6 cluster7 us europe lifescience mediatelco hightech
+describe $y1list $y2list
+summarize $y1list $y2list
+
+global xlist cluster2 cluster3 cluster4 cluster5 cluster6 cluster7 us europe lifescience mediatelco hightech financialservices businessservices industrial
 global x2 cluster2 
 global x3 cluster3
 global x4 cluster4
 global x5 cluster5
 global x6 cluster6 
 global x7 cluster7 
-
 global x_control2 us
 global x_control3 europe
 global x_control4 lifescience
 global x_control5 mediatelco
 global x_control6 hightech
+global x_control7 financialservices
+global x_control8 businessservices
+global x_control9 industrial
 
-describe $y1list $y2list
-summarize $y1list $y2list
 
 * OLS regressions 
 reg $y1list $xlist 
 reg $y2list $xlist
-
 * SUR model 
 sureg ($y1list $xlist) ($y2list $xlist), corr dfk small
 
+* Tobit
+global xlist cluster2 cluster3 cluster4 cluster5 cluster6 cluster7 us europe lifescience mediatelco hightech financialservices
+tobit $y1list $xlist
+global xlist cluster2 cluster3 cluster4 cluster5 cluster6 cluster7 us europe lifescience hightech businessservices industrial
+tobit $y2list $xlist
 
-* Testing difference among coefficients of the sae regression (financial or strategic)
+
+* Testing difference among coefficients of the same regression (financial or strategic)
 test [$y1list]$x2 =[$y1list]$x3 =0
 test [$y1list]$x2 =[$y1list]$x4 =0
 test [$y1list]$x2 =[$y1list]$x5 =0
@@ -311,7 +316,7 @@ test [$y2list]$x_control4 =[$y2list]$x_control5 =0
 test [$y2list]$x_control4 =[$y2list]$x_control6 =0
 test [$y2list]$x_control5 =[$y2list]$x_control6 =0
 
-* Testing coefficients of the variables to zero (in order to drop them)
+* Testing same coefficients of different regressions to zero (in order to drop them)
 test [$y1list]$x2 =[$y2list]$x2 =0
 test [$y1list]$x3 =[$y2list]$x3 =0
 test [$y1list]$x4 =[$y2list]$x4 =0
