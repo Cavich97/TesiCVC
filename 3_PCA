@@ -2,37 +2,22 @@ global xlist numinv numstartup numfirstround avgagefirstinv avground avgroundfir
 global id cvcname
 
 
-* Intermediate PCAs
-
-global xlist avgagefirstinv avground avgroundfirstinv
-pca $xlist
-loadingplot
-
-global xlist percnewcountry avggeodistcs geoentropy
-
-global xlist indtotentropy indunrentropy indrelentropy
-
-global xlist numinvoutside4digit percinvoutside4digit numinvoutside2digit percinvoutside2digit
-
-global xlist avgivc1 avgivc2 avgfinint1 avgfinint2 avgparent1ivc avgparent2ivc avgparent2finint
-
-global xlist cultdistcp geodistcp
-
-global xlist numalliances20y percalliances20y numstartupallied20y percstartupallied20y avgalliances20y numalliances5y percalliances5y numstartupallied5y percstartupallied5y avgalliances5y
-
-global xlist numalliancesafterinv20y percalliancesafterinv20y numalliancesafterinv5y percalliancesafterinv5y
-
-global xlist numalliances5y percalliances5y numstartupallied5y percstartupallied5y avgalliances5y numalliancesafterinv5y percalliancesafterinv5y 
-
-global xlist numacquisitions20y percacquisitions20y numacquisitionsinternal20y percacquisitionsinternal20y numacquisitions5y percacquisitions5y numacquisitionsinternal5y percacquisitionsinternal5y
-
-
 
 * FINAL PCAs
+
+
+* CVC SIZE:
+global ncomp0 1
+global x0list numinv numstartup nummanagers
+pwcorr $x0list, label replace star(all)
+pca $x0list, comp($ncomp0) blanks(.33)
+
+predict cvcsize
 
 * INVESTMENT STRATEGY:
 global ncomp1 5
 global x1list avground avgroundfirstinv firstroundfreq percsyndfirstinv percnewcountry avggeodistcs geoentropy percnewind indtotentropy indunrentropy percinvoutside4digit percinvoutside2digit
+pwcorr $x1list, label replace star(all)
 pca $x1list, comp($ncomp1) blanks(.3)
 rotate, varimax blanks(.3)
 rotate, clear
@@ -43,6 +28,7 @@ predict latestage industrydiversification geogdiversification industryexploratio
 * ORGANIZATIONAL STRUCTURE:
 global ncomp2 2
 global x2list percsubsidinv cultdistcp geodistcp
+pwcorr $x2list, label replace star(all)
 pca $x2list, comp($ncomp2) blanks(.3)
 
 predict distanceparent autonomy 
@@ -51,6 +37,7 @@ predict distanceparent autonomy
 * HUMAN CAPITAL:
 global ncomp3 3
 global x3list avgfinint1 avgparent1ivc ethnicityentropy percfemalemanagers
+pwcorr $x3list, label replace star(all)
 pca $x3list, comp($ncomp3) blanks(.3)
 rotate, varimax blanks(.3)
 rotate, clear
@@ -58,15 +45,25 @@ rotate, clear
 predict managersparent femalemanagers ethnicitydiversification
 
 
-* PERFORMANCE: no PCA needed
 
 
-* CVC SIZE:
-global ncomp 1
-global xlist numinv numstartup nummanagers
-pca $xlist, comp($ncomp) blanks(.33)
 
-predict cvcsize
+
+* Intermediate PCAs
+
+global xlist avgagefirstinv avground avgroundfirstinv
+pca $xlist
+loadingplot
+
+global xlist percnewcountry avggeodistcs geoentropy
+global xlist indtotentropy indunrentropy indrelentropy
+global xlist numinvoutside4digit percinvoutside4digit numinvoutside2digit percinvoutside2digit
+global xlist avgivc1 avgivc2 avgfinint1 avgfinint2 avgparent1ivc avgparent2ivc avgparent2finint
+global xlist cultdistcp geodistcp
+global xlist numalliances20y percalliances20y numstartupallied20y percstartupallied20y avgalliances20y numalliances5y percalliances5y numstartupallied5y percstartupallied5y avgalliances5y
+global xlist numalliancesafterinv20y percalliancesafterinv20y numalliancesafterinv5y percalliancesafterinv5y
+global xlist numalliances5y percalliances5y numstartupallied5y percstartupallied5y avgalliances5y numalliancesafterinv5y percalliancesafterinv5y 
+global xlist numacquisitions20y percacquisitions20y numacquisitionsinternal20y percacquisitionsinternal20y numacquisitions5y percacquisitions5y numacquisitionsinternal5y percacquisitionsinternal5y
 
 
 
