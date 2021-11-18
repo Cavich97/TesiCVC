@@ -16,7 +16,7 @@ predict cvcsize
 
 * INVESTMENT STRATEGY:
 global ncomp1 5
-global x1list avground avgroundfirstinv firstroundfreq percsyndfirstinv percnewcountry avggeodistcs geoentropy percnewind indtotentropy indunrentropy percinvoutside4digit percinvoutside2digit
+global x1list avground avgroundfirstinv firstroundfreq percsyndfirstinv indtotentropy indunrentropy percnewind percinvoutside4digit percinvoutside2digit avggeodistcs percnewcountry geoentropy
 pwcorr $x1list, label replace star(all)
 pca $x1list, comp($ncomp1) blanks(.3)
 rotate, varimax blanks(.3)
