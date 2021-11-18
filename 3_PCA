@@ -5,14 +5,18 @@ global id cvcname
 
 * FINAL PCAs
 
-
 * CVC SIZE:
+gen lognuminv = log(1+ numinv)
+gen lognumstartup =  log(1+numstartup)
+gen lognummanagers = log(1+nummanagers)
 global ncomp0 1
-global x0list numinv numstartup nummanagers
+global x0list lognuminv lognumstartup lognummanagers
 pwcorr $x0list, label replace star(all)
-pca $x0list, comp($ncomp0) blanks(.33)
+pca $x0list, comp($ncomp) blanks(.33)
+predict logcvcsize
 
-predict cvcsize
+predict logcvcsize
+
 
 * INVESTMENT STRATEGY:
 global ncomp1 5
