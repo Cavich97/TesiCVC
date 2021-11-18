@@ -6,7 +6,7 @@ global id cvcname
 * FINAL PCAs
 
 * CVC SIZE:
-gen lognuminv = log(1+ numinv)
+gen lognuminv = log(1+numinv)
 gen lognumstartup =  log(1+numstartup)
 gen lognummanagers = log(1+nummanagers)
 global ncomp0 1
