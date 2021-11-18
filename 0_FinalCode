@@ -1,5 +1,13 @@
 * PCA
 
+* CVC SIZE:
+global ncomp 1
+global xlist lognuminv lognumstartup lognummanagers
+pca $xlist, comp($ncomp) blanks(.33)
+predict logcvcsize
+
+predict logcvcsize
+
 
 * INVESTMENT STRATEGY:
 global ncomp1 5
@@ -29,16 +37,6 @@ rotate, clear
 predict managersparent femalemanagers ethnicitydiversification
 
 
-* PERFORMANCE: no PCA needed
-
-
-* CVC SIZE:
-global ncomp 1
-global xlist lognuminv lognumstartup lognummanagers
-pca $xlist, comp($ncomp) blanks(.33)
-predict logcvcsize
-
-predict logcvcsize
 
 
 
