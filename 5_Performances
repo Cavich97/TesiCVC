@@ -246,7 +246,7 @@ global y2list percstrategic5y
 describe $y1list $y2list
 summarize $y1list $y2list
 
-global xlist cluster2 cluster3 cluster4 cluster5 cluster6 cluster7 us europe lifescience mediatelco hightech financialservices businessservices industrial
+global xlist cluster2 cluster3 cluster4 cluster5 cluster6 cluster7 us europe lifescience mediatelco hightech businessservices industrial
 global x2 cluster2 
 global x3 cluster3
 global x4 cluster4
@@ -269,22 +269,6 @@ reg $y2list $xlist
 * SUR model 
 sureg ($y1list $xlist) ($y2list $xlist), corr dfk small
 
-* Tobit
-global xlist cluster2 cluster3 cluster4 cluster5 cluster6 cluster7 us europe lifescience hightech mediatelco industrial
-tobit $y1list $xlist, ll(0)
-global xlist cluster2 cluster3 cluster4 cluster5 cluster6 cluster7 us europe lifescience hightech mediatelco industrial
-tobit $y2list $xlist, ll(0)
-
-* meTobit model
-gen managerslatestage = managersparent * latestage
-gen managersindustrydiversification = managersparent * industrydiversification
-gen managersgeogdiversification = managersparent * geogdiversification
-gen managersindustryexploration = managersparent * industryexploration
-gen managerssyndacate = managersparent * syndacate
-global xlist logcvcsize latestage industrydiversification geogdiversification industryexploration syndacate distanceparent autonomy managersparent femalemanagers ethnicitydiversification logproductivity us europe lifescience mediatelco financialservices
-tobit $y1list $xlist, ll(0) 
-global xlist logcvcsize latestage industrydiversification geogdiversification industryexploration syndacate distanceparent autonomy managersparent femalemanagers ethnicitydiversification logproductivity us europe lifescience hightech businessservices industrial
-tobit $y2list $xlist, ll(0)
 
 * Testing difference among coefficients of the same regression (financial or strategic)
 test [$y1list]$x2 =[$y1list]$x3 =0
@@ -390,7 +374,7 @@ global y2list percstrategic5y
 describe $y1list $y2list
 summarize $y1list $y2list
 
-global xlist logcvcsize latestage industrydiversification geogdiversification industryexploration syndacate distanceparent autonomy managersparent femalemanagers ethnicitydiversification logproductivity us europe lifescience mediatelco hightech financialservices businessservices industrial
+global xlist logcvcsize latestage industrydiversification geogdiversification industryexploration syndacate distanceparent autonomy managersparent femalemanagers ethnicitydiversification logproductivity us europe lifescience mediatelco hightech
 global x1 logcvcsize 
 global x2 latestage 
 global x3 industrydiversification
@@ -409,7 +393,6 @@ global x_control4 lifescience
 global x_control5 mediatelco
 global x_control6 hightech
 global x_control7 financialservices
-global x_control8 businessservices
 global x_control9 industrial
 
 
@@ -419,17 +402,6 @@ reg $y2list $xlist
 * SUR model 
 sureg ($y1list $xlist) ($y2list $xlist), corr dfk small
 
-* Tobit model
-global xlist logcvcsize latestage industrydiversification geogdiversification industryexploration syndacate distanceparent autonomy managersparent femalemanagers ethnicitydiversification logproductivity us europe lifescience mediatelco financialservices
-tobit $y1list $xlist, ll(0) 
-global xlist logcvcsize latestage industrydiversification geogdiversification industryexploration syndacate distanceparent autonomy managersparent femalemanagers ethnicitydiversification logproductivity us europe lifescience hightech businessservices industrial
-tobit $y2list $xlist, ll(0)
-
-* meTobit model
-global xlist logcvcsize latestage industrydiversification geogdiversification industryexploration syndacate distanceparent autonomy managersparent femalemanagers ethnicitydiversification logproductivity us europe lifescience mediatelco financialservices
-metobit $y1list $xlist, ll(0) 
-global xlist logcvcsize latestage industrydiversification geogdiversification industryexploration syndacate distanceparent autonomy managersparent femalemanagers ethnicitydiversification logproductivity us europe lifescience hightech businessservices industrial
-metobit $y2list $xlist, ll(0)
 
 * Testing difference among coefficients of the sae regression (financial or strategic)
 test [$y1list]$x1 =[$y1list]$x2 =0
