@@ -7,7 +7,7 @@ global y2list percstrategic5y
 describe $y1list $y2list
 summarize $y1list $y2list
 
-global xlist cluster2 cluster3 cluster4 cluster5 cluster6 cluster7 us europe lifescience mediatelco hightech businessservices industrial
+global xlist cluster2 cluster3 cluster4 cluster5 cluster6 cluster7 us europe lifescience hightech industrial
 global x2 cluster2 
 global x3 cluster3
 global x4 cluster4
@@ -142,7 +142,7 @@ global y2list percstrategic5y
 describe $y1list $y2list
 summarize $y1list $y2list
 
-global xlist logcvcsize latestage industrydiversification geogdiversification industryexploration syndacate distanceparent autonomy managersparent femalemanagers ethnicitydiversification logproductivity us europe lifescience mediatelco hightech
+global xlist logcvcsize latestage industrydiversification geogdiversification industryexploration syndacate distanceparent autonomy managersparent femalemanagers ethnicitydiversification logproductivity cvcage us europe lifescience hightech industrial
 global x1 logcvcsize 
 global x2 latestage 
 global x3 industrydiversification
@@ -155,6 +155,7 @@ global x9 managersparent
 global x10 femalemanagers
 global x11 ethnicitydiversification
 global x12 logproductivity
+global x13 cvcage
 global x_control2 us
 global x_control3 europe
 global x_control4 lifescience
@@ -174,6 +175,11 @@ reg $y1list $xlist
 reg $y2list $xlist
 * SUR model 
 sureg ($y1list $xlist) ($y2list $xlist), corr dfk small
+
+
+* Marginal analysis
+
+margins i.dummy, at(x = -3(1)3)
 
 
 * Testing difference among coefficients of the sae regression (financial or strategic)
