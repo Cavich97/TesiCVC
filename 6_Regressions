@@ -173,8 +173,8 @@ tobit $y1list $xlist c.industryexploration#c.managersparent, ll(0)
 tobit $y2list $xlist c.industryexploration#c.managersparent, ll(0)
 * Marginal analysis
 margins, dydx(*)
-margins, dydx(managersparent) at(industryexploration=(-1 0 1.13)) plot(__swapxp)
-margins, dydx(industryexploration) at(managersparent=(-1.51 0 1.81)) plot(__swapxp)
+margins, dydx(managersparent) at(industryexploration=(-1 0.11 1.13)) plot(__swapxp)
+margins, dydx(industryexploration) at(managersparent=(-1.51 -0.11 1.81)) plot(__swapxp)
 
 * Tobit PCA + area
 global xlist logcvcsize latestage industrydiversification geogdiversification industryexploration syndacate distanceparent autonomy managersparent femalemanagers ethnicitydiversification logproductivity cvcage us europe lifescience hightech industrial
@@ -182,8 +182,8 @@ tobit $y1list $xlist c.industryexploration#c.managersparent, ll(0)
 tobit $y2list $xlist c.industryexploration#c.managersparent, ll(0)
 * Marginal analysis
 margins, dydx(*)
-margins, dydx(managersparent) at(industryexploration=(-1 0 1.13)) plot(__swapxp)
-margins, dydx(industryexploration) at(managersparent=(-1.51 0 1.81)) plot(__swapxp)
+margins, dydx(managersparent) at(industryexploration=(-1 0.11 1.13)) plot(__swapxp)
+margins, dydx(industryexploration) at(managersparent=(-1.51 -0.11 1.81)) plot(__swapxp)
 
 * Tobit PCA + area + industry&characteristics
 global xlist logcvcsize latestage industrydiversification geogdiversification industryexploration syndacate distanceparent autonomy managersparent femalemanagers ethnicitydiversification logproductivity cvcage us europe lifescience hightech industrial rdintensity capexintensity logcashflow
