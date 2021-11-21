@@ -142,7 +142,7 @@ global y2list percstrategic5y
 describe $y1list $y2list
 summarize $y1list $y2list
 
-global xlist logcvcsize latestage industrydiversification geogdiversification industryexploration syndacate distanceparent autonomy managersparent femalemanagers ethnicitydiversification logproductivity cvcage us europe lifescience hightech industrial
+global xlist logcvcsize latestage industrydiversification geogdiversification industryexploration syndacate distanceparent autonomy managersparent femalemanagers ethnicitydiversification logproductivity
 global x1 logcvcsize 
 global x2 latestage 
 global x3 industrydiversification
@@ -165,9 +165,30 @@ global x_control7 financialservices
 global x_control9 industrial
 
 
-* Tobit
+* Tobit PCA
+tobit $y1list $xlist c.industryexploration#c.managersparent, ll(0)
+tobit $y2list $xlist c.industryexploration#c.managersparent, ll(0)
+* Marginal analysis
+margins, dydx(*)
+margins, dydx(managersparent) at(industryexploration=(-1 0 1.13)) plot(__swapxp)
+margins, dydx(industryexploration) at(managersparent=(-1.51 0 1.81)) plot(__swapxp)
+
+* Tobit PCA + area
+global xlist logcvcsize latestage industrydiversification geogdiversification industryexploration syndacate distanceparent autonomy managersparent femalemanagers ethnicitydiversification logproductivity cvcage us europe lifescience hightech industrial
+tobit $y1list $xlist c.industryexploration#c.managersparent, ll(0)
+tobit $y2list $xlist c.industryexploration#c.managersparent, ll(0)
+* Marginal analysis
+margins, dydx(*)
+margins, dydx(managersparent) at(industryexploration=(-1 0 1.13)) plot(__swapxp)
+margins, dydx(industryexploration) at(managersparent=(-1.51 0 1.81)) plot(__swapxp)
+
+* Tobit PCA + area + industry&characteristics
+global xlist logcvcsize latestage industrydiversification geogdiversification industryexploration syndacate distanceparent autonomy managersparent femalemanagers ethnicitydiversification logproductivity cvcage us europe lifescience hightech industrial
 tobit $y1list $xlist, ll(0)
 tobit $y2list $xlist, ll(0)
+* Marginal analysis
+margins, dydx(*)
+
 
 
 * OLS regressions 
@@ -175,12 +196,6 @@ reg $y1list $xlist
 reg $y2list $xlist
 * SUR model 
 sureg ($y1list $xlist) ($y2list $xlist), corr dfk small
-
-
-* Marginal analysis
-
-margins i.dummy, at(x = -3(1)3)
-
 
 * Testing difference among coefficients of the sae regression (financial or strategic)
 test [$y1list]$x1 =[$y1list]$x2 =0
